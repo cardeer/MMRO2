@@ -26,6 +26,7 @@ namespace MMRO2
         public KeyboardState PrevKeyboardState = Keyboard.GetState();
 
         // gameplay data
+        public Texture2D InvisibleRect;
         public GameData GameData;
 
         // create global instance and return

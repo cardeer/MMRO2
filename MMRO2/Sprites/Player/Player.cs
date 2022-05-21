@@ -59,7 +59,7 @@ namespace MMRO2.Sprites.Player
             _wandOrigin = new Vector2(50, 159);
 
             Body = world.CreateBody(Vector2.Zero, 0f, BodyType.Static);
-            Body.Tag = new Tags.Player();
+            Body.Tag = Settings.Collision.Player;
 
             var player = Body.CreateRectangle(Width, Height, 1, Vector2.Zero);
             player.Restitution = 0f;
@@ -176,14 +176,26 @@ namespace MMRO2.Sprites.Player
 
             Global.Instance.GameData.Bullets.RemoveAll(e => e.ShouldRemove);
 
+            if (Global.Instance.GameData.ExplosionCalled)
+            {
+                Global.Instance.GameData.ExplosionCalled = false;
+
+                foreach (var monster in Global.Instance.GameData.Monsters)
+                {
+                    World.Remove(monster.Body);
+                }
+
+                Global.Instance.GameData.Monsters.Clear();
+
+                Global.Instance.GameData.PlayerHP -= 100;
+            }
+
             base.Update();
         }
 
         private float Player__rayCastCallback(Fixture fixture, Vector2 point, Vector2 normal, float fraction)
         {
-            Main.Tag tag = (Main.Tag)fixture.Body.Tag;
-
-            if (tag.Name == Settings.Collision.Tower || tag.Name == Settings.Collision.Ground)
+            if ((string)fixture.Body.Tag == Settings.Collision.Tower || (string)fixture.Body.Tag == Settings.Collision.Ground)
             {
                 _rayCastHit = true;
             }

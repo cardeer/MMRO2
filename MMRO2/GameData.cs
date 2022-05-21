@@ -10,6 +10,8 @@ namespace MMRO2
         public bool Paused = false;
         public bool PrevPaused = true;
 
+        public bool ExplosionCalled = false;
+
         public int Wave = 1;
 
         public float PlayerHP = 500f;
@@ -20,6 +22,7 @@ namespace MMRO2
 
         public List<Sprites.Player.Bullet> Bullets = new List<Sprites.Player.Bullet>();
         public List<Main.Monster> Monsters = new List<Main.Monster>();
+        public List<Sprites.EffectArea> Effects = new List<Sprites.EffectArea>();
 
         public World World;
         public Types.Camera Camera;
@@ -33,6 +36,11 @@ namespace MMRO2
             foreach (var monster in Monsters)
             {
                 World.Remove(monster.Body);
+            }
+
+            foreach (var effect in Effects)
+            {
+                World.Remove(effect.Body);
             }
 
             GameData newData = new GameData();

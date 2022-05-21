@@ -40,6 +40,8 @@ namespace MMRO2
             Global.Instance.SpriteBatch = _spriteBatch;
             Global.Instance.Content = Content;
 
+            Global.Instance.InvisibleRect = Utils.Sprite.Factory.CreateRectangle(1, 1, new Color(0, 0, 0, 0));
+
             Utils.Scene.Control.ChangeScene(Enums.Scenes.Playing);
         }
 

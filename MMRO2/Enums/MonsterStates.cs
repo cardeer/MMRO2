@@ -6,7 +6,6 @@ namespace MMRO2.Enums
 {
     enum MonsterStates
     {
-        Idle,
         Walking,
         Attacking,
     }

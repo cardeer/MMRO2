@@ -8,9 +8,9 @@ using tainicom.Aether.Physics2D.Dynamics;
 
 namespace MMRO2.Sprites.Monsters
 {
-    class Cabbage : Main.Monster
+    class Vanir : Main.Monster
     {
-        public float Speed = 1;
+        public float Speed = 3;
 
         private bool _slow = false;
         private float _slowTime = 0;
@@ -22,15 +22,17 @@ namespace MMRO2.Sprites.Monsters
         private bool _lightning = false;
         private float _lightningTime = 0;
 
-        public Cabbage(World world) : base(world)
+        public Vanir(World world) : base(world)
         {
-            Width = Height = 2;
+            Width = 1.5f;
 
-            Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/cabbage");
+            Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/vanir");
 
             Animations = new Dictionary<Enums.MonsterStates, Controllers.Animation>();
             Animations[Enums.MonsterStates.Walking] = new Controllers.Animation(animation1, 4, 1);
             Animations[Enums.MonsterStates.Attacking] = new Controllers.Animation(animation1, 4, 1);
+
+            Height = Width / ((float)Animations[0].FrameWidth / Animations[0].FrameHeight);
 
             Body = world.CreateBody(Vector2.Zero, 0f, BodyType.Kinematic);
             Body.Tag = Settings.Collision.Monster;
@@ -112,7 +114,7 @@ namespace MMRO2.Sprites.Monsters
             if (_lightning)
             {
                 _lightningTime += (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
-                
+
                 if (_lightningTime >= .1)
                 {
                     TakeDamage(50);
@@ -133,7 +135,7 @@ namespace MMRO2.Sprites.Monsters
                 Color.White,
                 0f,
                 Animations[State].FrameSize / 2,
-                new Vector2(Width / 2 + 1f) / Animations[State].FrameSize,
+                new Vector2(Width, Height) / Animations[State].FrameSize,
                 SpriteEffects.FlipVertically,
                 0f
             );

@@ -12,7 +12,7 @@ namespace MMRO2.Main
     {
         protected Dictionary<Enums.MonsterStates, Controllers.Animation> Animations;
 
-        public Enums.MonsterStates State = Enums.MonsterStates.Idle;
+        public Enums.MonsterStates State = Enums.MonsterStates.Walking;
 
         public Body Body;
         public World World;
@@ -29,8 +29,6 @@ namespace MMRO2.Main
         private Vector2 _hpSize = new Vector2(2, 0.3f);
         private Vector2 _hpOrigin;
 
-        protected Tags.Monster Tag;
-
         public Monster(World world)
         {
             World = world;
@@ -42,9 +40,9 @@ namespace MMRO2.Main
 
         public virtual void Update()
         {
-            if (Tag.Health <= 0)
+            if (HP <= 0)
             {
-                Tag.Health = 0;
+                HP = 0;
                 ShouldRemove = true;
             }
 
@@ -62,10 +60,21 @@ namespace MMRO2.Main
                 Color.White,
                 0f,
                 _hpOrigin,
-                _hpSize * new Vector2(Tag.Health / Tag.MaxHealth, 1) / _hpTextureSize,
+                _hpSize * new Vector2(HP / MaxHP, 1) / _hpTextureSize,
                 SpriteEffects.FlipVertically,
                 0f
             );
+        }
+
+        public void TakeDamage(float amount)
+        {
+            HP -= amount;
+
+            if (HP <= 0)
+            {
+                HP = 0;
+                ShouldRemove = true;
+            }
         }
     }
 }

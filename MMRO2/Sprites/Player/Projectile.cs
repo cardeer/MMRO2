@@ -23,7 +23,7 @@ namespace MMRO2.Sprites.Player
             Body = world.CreateBody(position, 0, BodyType.Static);
             var fixture = Body.CreateRectangle(Size.X, Size.Y, 1f, Vector2.Zero);
 
-            Body.Tag = new Tags.Projectile();
+            Body.Tag = "projectile";
             Body.OnCollision += Body_OnCollision;
         }
 

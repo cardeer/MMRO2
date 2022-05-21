@@ -11,7 +11,7 @@ namespace MMRO2.Sprites
     {
         public float Width;
         public float Height;
-        private Main.Tag _tag;
+        private string _tag;
 
         private int _blocksX;
         private int _blocksY;
@@ -21,7 +21,7 @@ namespace MMRO2.Sprites
 
         public Vector2 InitialPosition = Vector2.Zero;
 
-        public Tile(World world, Texture2D texture, Main.Tag tag, float width, float height, int blocksX = 1, int blocksY = 1) : base(world, texture)
+        public Tile(World world, Texture2D texture, string tag, float width, float height, int blocksX = 1, int blocksY = 1) : base(world, texture)
         {
             Width = width;
             Height = height;
@@ -41,10 +41,17 @@ namespace MMRO2.Sprites
             tile.Restitution = 0f;
             tile.Friction = .5f;
 
+            Body.OnCollision += Body_OnCollision;
+
             Scale = new Vector2(Width, Height) / TextureSize;
             Origin = Vector2.Zero;
 
             SetPosition(Vector2.Zero);
+        }
+
+        private bool Body_OnCollision(Fixture sender, Fixture other, tainicom.Aether.Physics2D.Dynamics.Contacts.Contact contact)
+        {
+            return true;
         }
 
         private void SetPosition(Vector2 position)

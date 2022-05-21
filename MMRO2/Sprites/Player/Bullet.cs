@@ -9,14 +9,32 @@ namespace MMRO2.Sprites.Player
     class Bullet : Main.PhysicsSprite
     {
         public bool ShouldRemove = false;
-        private Tags.Bullet _tag;
+        public Enums.BallTypes Type;
 
         public Bullet(World world, Vector2 position, float dirX, float dirY, float forceX, float forceY, Enums.BallTypes type) : base(world)
         {
-            _tag = new Tags.Bullet() { Type = type };
+            Type = type;
+
+            string tag = Settings.Collision.Bullet;
+
+            switch (type)
+            {
+                case Enums.BallTypes.Ice:
+                    tag = Settings.Collision.IceBullet;
+                    break;
+                case Enums.BallTypes.Fire:
+                    tag = Settings.Collision.FireBullet;
+                    break;
+                case Enums.BallTypes.Lightning:
+                    tag = Settings.Collision.LightningBullet;
+                    break;
+                case Enums.BallTypes.Explosion:
+                    tag = Settings.Collision.ExplosionBullet;
+                    break;
+            }
 
             Body = World.CreateBody(position + new Vector2(dirX * 2, dirY + .7f), 0, BodyType.Dynamic);
-            Body.Tag = _tag;
+            Body.Tag = tag;
 
             var bullet = Body.CreateCircle(0.2f, 1);
             bullet.Restitution = 0f;
@@ -29,28 +47,28 @@ namespace MMRO2.Sprites.Player
 
         private bool Body_OnCollision(Fixture sender, Fixture other, tainicom.Aether.Physics2D.Dynamics.Contacts.Contact contact)
         {
-            Main.Tag tag = (Main.Tag)other.Body.Tag;
-
-            if (Array.IndexOf(Settings.CollisionList.Bullet, tag.Name) != -1)
+            if (Array.IndexOf(Settings.CollisionList.Bullet, (string)other.Body.Tag) != -1)
             {
                 ShouldRemove = true;
 
-                if (tag.Name == Settings.Collision.Tower)
-                {
+                if ((string)other.Body.Tag == Settings.Collision.Tower) {
                     Global.Instance.GameData.PlayerHP -= 10;
+                    return true;
                 }
-                else if (tag.Name == Settings.Collision.Monster)
-                {
-                    Tags.Monster monster = (Tags.Monster)tag;
 
-                    if (_tag.Type == Enums.BallTypes.Normal)
-                    {
-                        monster.Health -= 50;
-                    }
-                    else if (_tag.Type == Enums.BallTypes.Ice)
-                    {
-                        monster.Speed = .5f;
-                    }
+                if (Type == Enums.BallTypes.Ice)
+                {
+                    var area = new EffectArea(World, Settings.Collision.IceArea, Body.Position, 3);
+                    Global.Instance.GameData.Effects.Add(area);
+                }
+                else if (Type == Enums.BallTypes.Lightning)
+                {
+                    var area = new EffectArea(World, Settings.Collision.LightningArea, Body.Position, 3);
+                    Global.Instance.GameData.Effects.Add(area);
+                }
+                else if (Type == Enums.BallTypes.Explosion)
+                {
+                    Global.Instance.GameData.ExplosionCalled = true;
                 }
             }
             else

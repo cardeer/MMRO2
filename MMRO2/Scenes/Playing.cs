@@ -73,7 +73,7 @@ namespace MMRO2.Scenes
 
             foreach (var edge in _edges)
             {
-                edge.Tag = new Tags.Edge();
+                edge.Tag = Settings.Collision.Edge;
                 edge.BodyType = BodyType.Static;
             }
 
@@ -81,17 +81,17 @@ namespace MMRO2.Scenes
 
             _map = new List<Sprites.Tile>();
 
-            var ground = new Sprites.Tile(World, _groundTex, new Tags.Ground(), Camera.Width - _borderWidth * 2, 1f, 1, 1);
+            var ground = new Sprites.Tile(World, _groundTex, Settings.Collision.Ground, Camera.Width - _borderWidth * 2, 1f, 1, 1);
             ground.Position = new Vector2(ground.TotalWidth / 2, ground.TotalHeight / 2);
             _map.Add(ground);
 
-            var tower = new Sprites.Tile(World, _towerTex, new Tags.Tower(), 3f, 7.5f, 1, 1);
-            tower.Position = new Vector2(Settings.Gameplay.PlayerBasePosition - tower.TotalWidth / 2, tower.TotalHeight /2);
+            var tower = new Sprites.Tile(World, _towerTex, Settings.Collision.Tower, 3f, 7.5f, 1, 1);
+            tower.Position = new Vector2(Settings.Gameplay.PlayerBasePosition - tower.TotalWidth / 2, tower.TotalHeight / 2);
             _map.Add(tower);
 
             _player.Body.Position = new Vector2(tower.Position.X / 2, tower.Position.Y + 2);
 
-            _stand = new Sprites.Tile(World, _standTex, new Tags.Tower(), 3f, 4f, 1, 1);
+            _stand = new Sprites.Tile(World, _standTex, Settings.Collision.Tower, 3f, 4f, 1, 1);
             _stand.Position = _player.Position + new Vector2(0, -_player.Height / 2 - _stand.Height / 2);
             _map.Add(_stand);
 
@@ -152,18 +152,21 @@ namespace MMRO2.Scenes
             if (_accumulatedSeconds >= 2)
             {
                 _accumulatedSeconds = 0;
-                var m1 = new Sprites.Monsters.Slime(World);
-                m1.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, m1.Height / 2 + 1);
+                var m1 = new Sprites.Monsters.Frog(World);
+                m1.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, m1.Height / 2);
                 Global.Instance.GameData.Monsters.Add(m1);
-
-                var m2 = new Sprites.Monsters.Cabbage(World);
-                m2.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, 5f);
-                Global.Instance.GameData.Monsters.Add(m2);
             }
             else
             {
                 _accumulatedSeconds += (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
             }
+
+            foreach (var effect in Global.Instance.GameData.Effects)
+            {
+                effect.Update();
+            }
+
+            Global.Instance.GameData.Effects.RemoveAll(e => e.Time >= .1);
 
             base.Update();
         }
@@ -175,7 +178,7 @@ namespace MMRO2.Scenes
             EndSprite();
 
             BeginSprite(true);
-            
+
             foreach (var obj in _map)
             {
                 obj.Draw();
