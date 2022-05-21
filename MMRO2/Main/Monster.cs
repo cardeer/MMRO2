@@ -67,7 +67,7 @@ namespace MMRO2.Main
             );
         }
 
-        public void TakeDamage(float amount)
+        public virtual void TakeDamage(float amount)
         {
             HP -= amount;
 

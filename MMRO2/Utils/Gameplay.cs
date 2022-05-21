@@ -10,7 +10,7 @@ namespace MMRO2.Utils
         public static Main.Monster RandomMonster(World world)
         {
             Random random = new Random();
-            Enums.Monsters[] list = Settings.Gameplay.Monsters[Global.Instance.GameData.Wave];
+            Enums.Monsters[] list = Settings.Gameplay.MonsterList[Global.Instance.GameData.Wave];
             Enums.Monsters monster = list[random.Next(0, list.Length)];
 
             if (monster == Enums.Monsters.Cabbage) return new Sprites.Monsters.Cabbage(world);
@@ -19,6 +19,13 @@ namespace MMRO2.Utils
             else if (monster == Enums.Monsters.Vanir) return new Sprites.Monsters.Vanir(world);
             else if (monster == Enums.Monsters.Frog) return new Sprites.Monsters.Frog(world);
             //if (monster == Enums.Monsters.Golem) return new Sprites.Monsters.Golem(world);
+
+            return null;
+        }
+
+        public static Main.Monster GetBoss(World world, int wave)
+        {
+            if (wave == 3) return new Sprites.Monsters.Frog(world);
 
             return null;
         }

@@ -157,11 +157,33 @@ namespace MMRO2.Scenes
             if (_accumulatedSeconds >= _spawnSeconds)
             {
                 _accumulatedSeconds = 0;
-                _spawnSeconds = _random.Next(5, 10);
+                _spawnSeconds = _random.Next(1, 2);
 
-                var m1 = Utils.Gameplay.RandomMonster(World);
-                m1.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, m1.Height / 2 + m1.Offset);
-                Global.Instance.GameData.Monsters.Add(m1);
+                int monsterCount = Settings.Gameplay.MonsterCount[Global.Instance.GameData.Wave - 1];
+
+                if (Global.Instance.GameData.EnemiesSpawned >= monsterCount)
+                {
+                    if (Global.Instance.GameData.Wave % 3 == 0 && !Global.Instance.GameData.BossSpawned && Global.Instance.GameData.Monsters.Count == 0)
+                    {
+                        var boss = Utils.Gameplay.GetBoss(World, Global.Instance.GameData.Wave);
+                        boss.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, boss.Height / 2 + boss.Offset);
+                        Global.Instance.GameData.BossSpawned = true;
+                        Global.Instance.GameData.Monsters.Add(boss);
+                    }
+                    else if (Global.Instance.GameData.Wave % 3 != 0 && Global.Instance.GameData.Monsters.Count == 0)
+                    {
+                        Global.Instance.GameData = Global.Instance.GameData.Reset();
+                        Global.Instance.GameData.BossDied = true;
+                    }
+                }
+                else if (Global.Instance.GameData.EnemiesSpawned < monsterCount)
+                {
+                    var m1 = Utils.Gameplay.RandomMonster(World);
+                    m1.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, m1.Height / 2 + m1.Offset);
+                    Global.Instance.GameData.Monsters.Add(m1);
+
+                    Global.Instance.GameData.EnemiesSpawned++;
+                }
             }
             else
             {
@@ -174,6 +196,15 @@ namespace MMRO2.Scenes
             }
 
             Global.Instance.GameData.Effects.RemoveAll(e => e.Time >= .1);
+
+            if (Global.Instance.GameData.PlayerHP <= 0)
+            {
+
+            }
+            else if (Global.Instance.GameData.BossDied)
+            {
+
+            }
 
             base.Update();
         }

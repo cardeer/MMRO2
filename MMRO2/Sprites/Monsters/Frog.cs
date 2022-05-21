@@ -157,5 +157,15 @@ namespace MMRO2.Sprites.Monsters
 
             base.Draw();
         }
+
+        public override void TakeDamage(float amount)
+        {
+            base.TakeDamage(amount);
+
+            if (HP <= 0)
+            {
+                Global.Instance.GameData.BossDied = true;
+            }
+        }
     }
 }
