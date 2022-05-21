@@ -10,7 +10,6 @@ namespace MMRO2.Enums
         Slime,
         Rabbit,
         Vanir,
-        Frog,
-        Golem,
+        SnowSlime,
     }
 }

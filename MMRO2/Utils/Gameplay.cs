@@ -15,10 +15,9 @@ namespace MMRO2.Utils
 
             if (monster == Enums.Monsters.Cabbage) return new Sprites.Monsters.Cabbage(world);
             else if (monster == Enums.Monsters.Slime) return new Sprites.Monsters.Slime(world);
-            //if (monster == Enums.Monsters.Rabbit) return new Sprites.Monsters.Rabbit(world);
+            else if (monster == Enums.Monsters.Rabbit) return new Sprites.Monsters.Rabbit(world);
             else if (monster == Enums.Monsters.Vanir) return new Sprites.Monsters.Vanir(world);
-            else if (monster == Enums.Monsters.Frog) return new Sprites.Monsters.Frog(world);
-            //if (monster == Enums.Monsters.Golem) return new Sprites.Monsters.Golem(world);
+            else if (monster == Enums.Monsters.SnowSlime) return new Sprites.Monsters.SnowSlime(world);
 
             return null;
         }
@@ -26,6 +25,8 @@ namespace MMRO2.Utils
         public static Main.Monster GetBoss(World world, int wave)
         {
             if (wave == 3) return new Sprites.Monsters.Frog(world);
+            else if (wave == 6) return new Sprites.Monsters.Golem(world);
+            else if (wave == 9) return new Sprites.Monsters.Shogun(world);
 
             return null;
         }

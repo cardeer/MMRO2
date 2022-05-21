@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Rect = Microsoft.Xna.Framework.Rectangle;
 using Microsoft.Xna.Framework.Graphics;
 using tainicom.Aether.Physics2D.Dynamics;
 
 namespace MMRO2.Sprites.Monsters
 {
-    class Slime : Main.Monster
+    class Rabbit : Main.Monster
     {
-        public float Speed = 1;
+        public float Speed = 3;
 
         private bool _slow = false;
         private float _slowTime = 0;
@@ -21,15 +22,17 @@ namespace MMRO2.Sprites.Monsters
         private bool _lightning = false;
         private float _lightningTime = 0;
 
-        public Slime(World world) : base(world)
+        public Rabbit(World world) : base(world)
         {
-            Width = Height = 2;
+            Width = 1.5f;
 
-            Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/slime");
+            Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/rabbit");
 
             Animations = new Dictionary<Enums.MonsterStates, Controllers.Animation>();
-            Animations[Enums.MonsterStates.Walking] = new Controllers.Animation(animation1, 8, 1);
-            Animations[Enums.MonsterStates.Attacking] = new Controllers.Animation(animation1, 8, 1);
+            Animations[Enums.MonsterStates.Walking] = new Controllers.Animation(animation1, 10, 1);
+            Animations[Enums.MonsterStates.Attacking] = new Controllers.Animation(animation1, 10, 1);
+
+            Height = Width / ((float)Animations[0].FrameWidth / Animations[0].FrameHeight);
 
             Body = world.CreateBody(Vector2.Zero, 0f, BodyType.Kinematic);
             Body.Tag = Settings.Collision.Monster;
@@ -37,7 +40,7 @@ namespace MMRO2.Sprites.Monsters
             Body.FixedRotation = true;
 
             Body.CreateCircle(Width, 1f);
-            Body.OnCollision += Body_OnCollision; ;
+            Body.OnCollision += Body_OnCollision;
         }
 
         private bool Body_OnCollision(Fixture sender, Fixture other, tainicom.Aether.Physics2D.Dynamics.Contacts.Contact contact)
@@ -72,7 +75,7 @@ namespace MMRO2.Sprites.Monsters
             if (Body.Position.X <= Settings.Gameplay.PlayerBasePosition + Width / 2)
             {
                 Body.LinearVelocity = Vector2.Zero;
-                Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["slime"];
+                Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["cabbage"];
                 ShouldRemove = true;
             }
 
@@ -128,14 +131,15 @@ namespace MMRO2.Sprites.Monsters
             Global.Instance.SpriteBatch.Draw(
                 Animations[State].Texture,
                 Body.Position,
-                new Microsoft.Xna.Framework.Rectangle(Animations[State].FrameX, Animations[State].FrameY, Animations[State].FrameWidth, Animations[State].FrameHeight),
+                new Rect(Animations[State].FrameX, Animations[State].FrameY, Animations[State].FrameWidth, Animations[State].FrameHeight),
                 Color.White,
                 0f,
                 Animations[State].FrameSize / 2,
-                new Vector2(Width / 2 + 1f) / Animations[State].FrameSize,
+                new Vector2(Width, Height) / Animations[State].FrameSize,
                 SpriteEffects.FlipVertically,
                 0f
             );
+
             base.Draw();
         }
     }

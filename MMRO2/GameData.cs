@@ -12,10 +12,11 @@ namespace MMRO2
 
         public bool ExplosionCalled = false;
 
-        public int Wave = 3;
+        public int Wave = 6;
         public int EnemiesSpawned = 0;
         public bool BossDied = false;
         public bool BossSpawned = false;
+        public bool Failed = false;
 
         public float PlayerHP = 500f;
         public float PlayerMaxHP = 500f;

@@ -24,13 +24,13 @@ namespace MMRO2.Settings
             { 2, new Enums.Monsters[]{ Enums.Monsters.Cabbage} },
             { 3, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime } },
             { 4, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime } },
-            { 5, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir } },
-            { 6, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir } },
-            { 7, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
-            { 8, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
-            { 9, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
+            { 5, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit } },
+            { 6, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit } },
+            { 7, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit, Enums.Monsters.Vanir } },
+            { 8, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit, Enums.Monsters.Vanir } },
+            { 9, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit, Enums.Monsters.Vanir } },
         };
 
-        public static readonly int[] MonsterCount = new int[] { 10, 12, 10, 17, 20, 23, 25, 28, 30 };
+        public static readonly int[] MonsterCount = new int[] { 10, 12, 15, 17, 20, 1, 25, 28, 30 };
     }
 }

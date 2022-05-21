@@ -7,7 +7,7 @@ using tainicom.Aether.Physics2D.Dynamics;
 
 namespace MMRO2.Sprites.Monsters
 {
-    class Slime : Main.Monster
+    class SnowSlime : Main.Monster
     {
         public float Speed = 1;
 
@@ -21,11 +21,11 @@ namespace MMRO2.Sprites.Monsters
         private bool _lightning = false;
         private float _lightningTime = 0;
 
-        public Slime(World world) : base(world)
+        public SnowSlime(World world) : base(world)
         {
             Width = Height = 2;
 
-            Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/slime");
+            Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/snow_slime");
 
             Animations = new Dictionary<Enums.MonsterStates, Controllers.Animation>();
             Animations[Enums.MonsterStates.Walking] = new Controllers.Animation(animation1, 8, 1);

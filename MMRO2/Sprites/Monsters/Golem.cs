@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Rect = Microsoft.Xna.Framework.Rectangle;
 using Microsoft.Xna.Framework.Graphics;
 using tainicom.Aether.Physics2D.Dynamics;
 
 namespace MMRO2.Sprites.Monsters
 {
-    class Slime : Main.Monster
+    class Golem : Main.Monster
     {
         public float Speed = 1;
 
@@ -21,15 +22,22 @@ namespace MMRO2.Sprites.Monsters
         private bool _lightning = false;
         private float _lightningTime = 0;
 
-        public Slime(World world) : base(world)
-        {
-            Width = Height = 2;
+        private float _attackCooldown = 3f;
 
-            Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/slime");
+        public Golem(World world) : base(world)
+        {
+            Height = 5;
+
+            Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/golem");
+            Texture2D animation2 = Global.Instance.Content.Load<Texture2D>("images/monsters/golem_attack");
 
             Animations = new Dictionary<Enums.MonsterStates, Controllers.Animation>();
-            Animations[Enums.MonsterStates.Walking] = new Controllers.Animation(animation1, 8, 1);
-            Animations[Enums.MonsterStates.Attacking] = new Controllers.Animation(animation1, 8, 1);
+            Animations[Enums.MonsterStates.Walking] = new Controllers.Animation(animation1, 6, 1);
+            Animations[Enums.MonsterStates.Attacking] = new Controllers.Animation(animation2, 5, 1);
+
+            State = Enums.MonsterStates.Walking;
+
+            Width = Height * ((float)Animations[State].FrameWidth / Animations[State].FrameHeight);
 
             Body = world.CreateBody(Vector2.Zero, 0f, BodyType.Kinematic);
             Body.Tag = Settings.Collision.Monster;
@@ -37,7 +45,7 @@ namespace MMRO2.Sprites.Monsters
             Body.FixedRotation = true;
 
             Body.CreateCircle(Width, 1f);
-            Body.OnCollision += Body_OnCollision; ;
+            Body.OnCollision += Body_OnCollision;
         }
 
         private bool Body_OnCollision(Fixture sender, Fixture other, tainicom.Aether.Physics2D.Dynamics.Contacts.Contact contact)
@@ -69,11 +77,21 @@ namespace MMRO2.Sprites.Monsters
         {
             Body.LinearVelocity = new Vector2(-Speed, 0);
 
-            if (Body.Position.X <= Settings.Gameplay.PlayerBasePosition + Width / 2)
+            if (Body.Position.X <= Settings.Gameplay.PlayerBasePosition + Width / 2 + 3)
             {
+                State = Enums.MonsterStates.Attacking;
                 Body.LinearVelocity = Vector2.Zero;
-                Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["slime"];
-                ShouldRemove = true;
+            }
+
+            if (State == Enums.MonsterStates.Attacking)
+            {
+                _attackCooldown -= (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
+
+                if (_attackCooldown <= 0)
+                {
+                    Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["cabbage"];
+                    _attackCooldown = 3;
+                }
             }
 
             if (_slow)
@@ -128,15 +146,26 @@ namespace MMRO2.Sprites.Monsters
             Global.Instance.SpriteBatch.Draw(
                 Animations[State].Texture,
                 Body.Position,
-                new Microsoft.Xna.Framework.Rectangle(Animations[State].FrameX, Animations[State].FrameY, Animations[State].FrameWidth, Animations[State].FrameHeight),
+                new Rect(Animations[State].FrameX, Animations[State].FrameY, Animations[State].FrameWidth, Animations[State].FrameHeight),
                 Color.White,
                 0f,
                 Animations[State].FrameSize / 2,
-                new Vector2(Width / 2 + 1f) / Animations[State].FrameSize,
+                new Vector2(Width, Height) / Animations[State].FrameSize,
                 SpriteEffects.FlipVertically,
                 0f
             );
+
             base.Draw();
+        }
+
+        public override void TakeDamage(float amount)
+        {
+            base.TakeDamage(amount);
+
+            if (HP <= 0)
+            {
+                Global.Instance.GameData.BossDied = true;
+            }
         }
     }
 }

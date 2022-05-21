@@ -157,7 +157,7 @@ namespace MMRO2.Scenes
             if (_accumulatedSeconds >= _spawnSeconds)
             {
                 _accumulatedSeconds = 0;
-                _spawnSeconds = _random.Next(1, 2);
+                _spawnSeconds = _random.Next(5, 10);
 
                 int monsterCount = Settings.Gameplay.MonsterCount[Global.Instance.GameData.Wave - 1];
 
@@ -199,7 +199,7 @@ namespace MMRO2.Scenes
 
             if (Global.Instance.GameData.PlayerHP <= 0)
             {
-
+                Global.Instance.GameData.Failed = true;
             }
             else if (Global.Instance.GameData.BossDied)
             {

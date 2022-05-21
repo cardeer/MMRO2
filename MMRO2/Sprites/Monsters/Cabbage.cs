@@ -120,7 +120,6 @@ namespace MMRO2.Sprites.Monsters
                     TakeDamage(50);
                     _lightning = false;
                 }
-
             }
 
             base.Update();
