@@ -1,0 +1,222 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using tainicom.Aether.Physics2D.Dynamics;
+
+namespace MMRO2.Scenes
+{
+    class Playing : Main.PhysicsScene
+    {
+        private Sprites.Rectangle _BG;
+        private List<Main.SceneComponent> _ui;
+
+        private Texture2D _bgForestTexture;
+        private Texture2D _bgHalloweenTexture;
+        private Texture2D _bgWinterTexture;
+
+        private Texture2D _groundTex;
+        private Texture2D _towerTex;
+        private Texture2D _standTex;
+
+        private Sprites.Tile _stand;
+
+        private Sprites.Player.Player _player;
+        private List<Sprites.Tile> _map;
+        private List<Body> _edges;
+        private Texture2D _pauseBackgroundTexture;
+
+        private UI.Hamburger _hamburger = new UI.Hamburger();
+
+        private float _borderWidth;
+        private float _abilityTop;
+
+        private float _accumulatedSeconds = 0f;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Global.Instance.GameData = new GameData();
+
+            Global.Instance.GameData.World = World;
+            Global.Instance.GameData.Camera = Camera;
+
+            _ui = new List<Main.SceneComponent>();
+            _ui.Add(new UI.Frame());
+            _ui.Add(new UI.PlayerStats());
+
+            //Load BG
+            _bgForestTexture = Global.Instance.Content.Load<Texture2D>("images/backgrounds/forest");
+            _bgHalloweenTexture = Global.Instance.Content.Load<Texture2D>("images/backgrounds/halloween");
+            _bgWinterTexture = Global.Instance.Content.Load<Texture2D>("images/backgrounds/winter");
+
+            _groundTex = Utils.Sprite.Factory.CreateRectangle(1, 1, new Color(0, 0, 0, 0));
+            _towerTex = Global.Instance.Content.Load<Texture2D>("images/map_objects/tower");
+            _standTex = Global.Instance.Content.Load<Texture2D>("images/map_objects/base");
+
+            _BG = new Sprites.Rectangle(_bgForestTexture, Settings.Window.Width, Settings.Window.Height);
+            _BG.Position = new Vector2(Settings.Window.Width / 2, _bgForestTexture.Height / 2);
+
+            _borderWidth = Camera.ConvertWidthToWorld(30);
+            _abilityTop = Camera.ConvertHeightToWorld(Math.Abs(Settings.Window.Height / 2 - Settings.UI.AbilityTop));
+
+            Camera.Position = new Vector3(Camera.Width / 2 - _borderWidth, _abilityTop, 0);
+
+            _edges = new List<Body>()
+            {
+                World.CreateEdge(new Vector2(0, 0), new Vector2(0, Camera.Height)),
+                World.CreateEdge(new Vector2(Settings.Gameplay.PlayerBasePosition, 0), new Vector2(Settings.Gameplay.PlayerBasePosition, Camera.Height))
+            };
+
+            foreach (var edge in _edges)
+            {
+                edge.Tag = new Tags.Edge();
+                edge.BodyType = BodyType.Static;
+            }
+
+            _player = new Sprites.Player.Player(World);
+
+            _map = new List<Sprites.Tile>();
+
+            var ground = new Sprites.Tile(World, _groundTex, new Tags.Ground(), Camera.Width - _borderWidth * 2, 1f, 1, 1);
+            ground.Position = new Vector2(ground.TotalWidth / 2, ground.TotalHeight / 2);
+            _map.Add(ground);
+
+            var tower = new Sprites.Tile(World, _towerTex, new Tags.Tower(), 3f, 7.5f, 1, 1);
+            tower.Position = new Vector2(Settings.Gameplay.PlayerBasePosition - tower.TotalWidth / 2, tower.TotalHeight /2);
+            _map.Add(tower);
+
+            _player.Body.Position = new Vector2(tower.Position.X / 2, tower.Position.Y + 2);
+
+            _stand = new Sprites.Tile(World, _standTex, new Tags.Tower(), 3f, 4f, 1, 1);
+            _stand.Position = _player.Position + new Vector2(0, -_player.Height / 2 - _stand.Height / 2);
+            _map.Add(_stand);
+
+
+            _pauseBackgroundTexture = Utils.Sprite.Factory.CreateRectangle(Settings.Window.Width, Settings.Window.Height, Color.Black);
+        }
+
+        public void HandleCamera()
+        {
+            KeyboardState state = Keyboard.GetState();
+
+            float totalX = 0;
+
+            if (state.IsKeyDown(Keys.A))
+            {
+                totalX -= 20;
+            }
+            if (state.IsKeyDown(Keys.D))
+            {
+                totalX += 20;
+            }
+
+            Camera.Position.X += totalX * (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
+
+            if (Camera.Position.X < Camera.Width / 2 - _borderWidth)
+            {
+                Camera.Position.X = Camera.Width / 2 - _borderWidth;
+            }
+        }
+
+        public override void Update()
+        {
+            //HandleCamera();
+
+            _hamburger.Update();
+
+            if (Global.Instance.GameData.Paused) return;
+
+            foreach (var ui in _ui)
+            {
+                ui.Update();
+            }
+
+            _player.Update();
+
+            foreach (var monster in Global.Instance.GameData.Monsters)
+            {
+                monster.Update();
+
+                if (monster.ShouldRemove)
+                {
+                    World.Remove(monster.Body);
+                }
+            }
+
+            Global.Instance.GameData.Monsters.RemoveAll(e => e.ShouldRemove);
+
+            if (_accumulatedSeconds >= 2)
+            {
+                _accumulatedSeconds = 0;
+                var m1 = new Sprites.Monsters.Slime(World);
+                m1.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, m1.Height / 2 + 1);
+                Global.Instance.GameData.Monsters.Add(m1);
+
+                var m2 = new Sprites.Monsters.Cabbage(World);
+                m2.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, 5f);
+                Global.Instance.GameData.Monsters.Add(m2);
+            }
+            else
+            {
+                _accumulatedSeconds += (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            base.Update();
+        }
+
+        public override void Draw()
+        {
+            BeginSprite();
+            _BG.Draw();
+            EndSprite();
+
+            BeginSprite(true);
+            
+            foreach (var obj in _map)
+            {
+                obj.Draw();
+            }
+
+            _player.Draw();
+
+            foreach (var monster in Global.Instance.GameData.Monsters)
+            {
+                monster.Draw();
+            }
+            EndSprite();
+
+            BeginSprite();
+
+            foreach (var ui in _ui)
+            {
+                ui.Draw();
+            }
+
+            if (Global.Instance.GameData.Paused)
+            {
+                Global.Instance.SpriteBatch.Draw(
+                    _pauseBackgroundTexture,
+                    Vector2.Zero,
+                    null,
+                    new Color(255, 255, 255, 150),
+                    0f,
+                    Vector2.Zero,
+                    1f,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
+
+            _hamburger.Draw();
+            EndSprite();
+
+            base.Draw();
+        }
+
+
+    }
+}

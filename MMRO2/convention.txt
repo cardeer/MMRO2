@@ -1,0 +1,3 @@
+﻿1. All public and protected fields / properties name must be in PascalCase
+2. All private fields / properties name must preceded by underscore (_) and followed by camelCase
+3. All method names whether it be private, public, or protected must be in PascalCase
