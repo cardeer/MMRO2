@@ -35,6 +35,9 @@ namespace MMRO2.Scenes
 
         private float _accumulatedSeconds = 0f;
 
+        private Random _random = new Random();
+        private int _spawnSeconds;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -97,6 +100,8 @@ namespace MMRO2.Scenes
 
 
             _pauseBackgroundTexture = Utils.Sprite.Factory.CreateRectangle(Settings.Window.Width, Settings.Window.Height, Color.Black);
+
+            _spawnSeconds = _random.Next(2, 5);
         }
 
         public void HandleCamera()
@@ -149,11 +154,13 @@ namespace MMRO2.Scenes
 
             Global.Instance.GameData.Monsters.RemoveAll(e => e.ShouldRemove);
 
-            if (_accumulatedSeconds >= 2)
+            if (_accumulatedSeconds >= _spawnSeconds)
             {
                 _accumulatedSeconds = 0;
-                var m1 = new Sprites.Monsters.Frog(World);
-                m1.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, m1.Height / 2);
+                _spawnSeconds = _random.Next(5, 10);
+
+                var m1 = Utils.Gameplay.RandomMonster(World);
+                m1.Body.Position = new Vector2(Camera.Width - _borderWidth - 2f, m1.Height / 2 + m1.Offset);
                 Global.Instance.GameData.Monsters.Add(m1);
             }
             else

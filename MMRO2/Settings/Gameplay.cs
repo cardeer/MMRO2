@@ -17,5 +17,18 @@ namespace MMRO2.Settings
             { "cabbage", 10 },
             { "slime", 10 }
         };
+
+        public static readonly Dictionary<int, Enums.Monsters[]> Monsters = new Dictionary<int, Enums.Monsters[]>()
+        {
+            { 1, new Enums.Monsters[]{ Enums.Monsters.Cabbage } },
+            { 2, new Enums.Monsters[]{ Enums.Monsters.Cabbage} },
+            { 3, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime } },
+            { 4, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime } },
+            { 5, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir } },
+            { 6, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir } },
+            { 7, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
+            { 8, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
+            { 9, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
+        };
     }
 }

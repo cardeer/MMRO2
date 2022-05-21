@@ -12,7 +12,7 @@ namespace MMRO2
 
         public bool ExplosionCalled = false;
 
-        public int Wave = 1;
+        public int Wave = 5;
 
         public float PlayerHP = 500f;
         public float PlayerMaxHP = 500f;

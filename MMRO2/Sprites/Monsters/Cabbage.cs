@@ -26,6 +26,8 @@ namespace MMRO2.Sprites.Monsters
         {
             Width = Height = 2;
 
+            Offset = 3;
+
             Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/cabbage");
 
             Animations = new Dictionary<Enums.MonsterStates, Controllers.Animation>();

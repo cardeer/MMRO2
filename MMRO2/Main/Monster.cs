@@ -19,6 +19,7 @@ namespace MMRO2.Main
         public float Width;
         public float Height;
         public bool ShouldRemove = false;
+        public float Offset = 0;
 
         public float HP = 100f;
         public float MaxHP = 100f;
