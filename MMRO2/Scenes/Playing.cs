@@ -10,6 +10,7 @@ namespace MMRO2.Scenes
 {
     class Playing : Main.PhysicsScene
     {
+        private SpriteFont _font = Global.Instance.Content.Load<SpriteFont>("fonts/font14");
         private Sprites.Rectangle _BG;
         private List<Main.SceneComponent> _ui;
 
@@ -130,6 +131,8 @@ namespace MMRO2.Scenes
         public override void Update()
         {
             //HandleCamera();
+
+            if (Global.Instance.GameData.Failed || Global.Instance.GameData.BossDied) return;
 
             _hamburger.Update();
 
@@ -253,6 +256,37 @@ namespace MMRO2.Scenes
             }
 
             _hamburger.Draw();
+
+            if (Global.Instance.GameData.Failed)
+            {
+                Vector2 size = _font.MeasureString("YOU LOSE");
+                Global.Instance.SpriteBatch.DrawString(
+                    _font,
+                    "YOU LOSE",
+                    new Vector2(Settings.Window.Width / 2, Settings.Window.Height / 2),
+                    Color.White,
+                    0f,
+                    size / 2,
+                    1f,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
+            else if (Global.Instance.GameData.BossDied)
+            {
+                Vector2 size = _font.MeasureString("YOU WIN");
+                Global.Instance.SpriteBatch.DrawString(
+                    _font,
+                    "YOU WIN",
+                    new Vector2(Settings.Window.Width / 2, Settings.Window.Height / 2),
+                    Color.White,
+                    0f,
+                    size / 2,
+                    1f,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
             EndSprite();
 
             base.Draw();
