@@ -191,12 +191,19 @@ namespace MMRO2.Scenes
                 _accumulatedSeconds += (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            foreach (var effect in Global.Instance.GameData.Effects)
+            foreach (var effect in Global.Instance.GameData.BulletEffects)
             {
                 effect.Update();
             }
 
-            Global.Instance.GameData.Effects.RemoveAll(e => e.Time >= .1);
+            foreach (var effect in Global.Instance.GameData.StaticEffects)
+            {
+                effect.Update();
+            }
+
+            Global.Instance.GameData.StaticEffects.RemoveAll(e => e.ShouldRemove);
+
+            Global.Instance.GameData.BulletEffects.RemoveAll(e => e.Time >= .1);
 
             if (Global.Instance.GameData.PlayerHP <= 0)
             {
@@ -217,7 +224,6 @@ namespace MMRO2.Scenes
             EndSprite();
 
             BeginSprite(true);
-
             foreach (var obj in _map)
             {
                 obj.Draw();
@@ -229,10 +235,14 @@ namespace MMRO2.Scenes
             {
                 monster.Draw();
             }
+
+            foreach (var effect in Global.Instance.GameData.StaticEffects)
+            {
+                effect.Draw();
+            }
             EndSprite();
 
             BeginSprite();
-
             foreach (var ui in _ui)
             {
                 ui.Draw();
@@ -289,7 +299,5 @@ namespace MMRO2.Scenes
 
             base.Draw();
         }
-
-
     }
 }

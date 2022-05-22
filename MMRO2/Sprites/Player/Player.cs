@@ -42,6 +42,8 @@ namespace MMRO2.Sprites.Player
         private Texture2D _lightningBallTexture = Global.Instance.Content.Load<Texture2D>("images/staff_balls/lightning");
         private Texture2D _iceBallTexture = Global.Instance.Content.Load<Texture2D>("images/staff_balls/ice");
 
+        private Texture2D _explosionTexture = Global.Instance.Content.Load<Texture2D>("images/effects/explosion");
+
         private Enums.BallTypes _ballType = Enums.BallTypes.Normal;
 
         public Player(World world) : base(world)
@@ -186,27 +188,6 @@ namespace MMRO2.Sprites.Player
 
             Global.Instance.GameData.Bullets.RemoveAll(e => e.ShouldRemove);
 
-            if (Global.Instance.GameData.ExplosionCalled)
-            {
-                Global.Instance.GameData.ExplosionCalled = false;
-
-                foreach (var monster in Global.Instance.GameData.Monsters)
-                {
-                    if (!monster.IsBoss)
-                    {
-                        World.Remove(monster.Body);
-                    }
-                    else
-                    {
-                        monster.TakeDamage(monster.MaxHP * .3f);
-                    }
-                }
-
-                Global.Instance.GameData.Monsters.RemoveAll(e => !e.IsBoss);
-
-                Global.Instance.GameData.PlayerHP -= 100;
-            }
-
             foreach (var key in Global.Instance.GameData.SkillCooldown.Keys)
             {
                 if (Global.Instance.GameData.SkillCooldown[key][0] > 0)
@@ -311,9 +292,6 @@ namespace MMRO2.Sprites.Player
                 case Enums.BallTypes.Lightning:
                     _staffBall.SetTexture(_lightningBallTexture, 6, 1);
                     break;
-                case Enums.BallTypes.Explosion:
-                    _staffBall.SetTexture(_fireBallTexture, 6, 1);
-                    break;
                 default:
                     _staffBall.SetTexture(_fireBallTexture, 6, 1);
                     break;
@@ -325,37 +303,52 @@ namespace MMRO2.Sprites.Player
             if (Utils.Input.IsKeyPressed(Keys.Q))
             {
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Ice][0] > 0) return;
-                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Ice] > Global.Instance.GameData.PlayerMana)
-                {
-                    return;
-                }
+                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Ice] > Global.Instance.GameData.PlayerMana) return;
+
                 SetBallType(Enums.BallTypes.Ice);
             }
             else if (Utils.Input.IsKeyPressed(Keys.W))
             {
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Fire][0] > 0) return;
-                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Fire] > Global.Instance.GameData.PlayerMana)
-                {
-                    return;
-                }
+                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Fire] > Global.Instance.GameData.PlayerMana) return;
+
                 SetBallType(Enums.BallTypes.Fire);
             }
             else if (Utils.Input.IsKeyPressed(Keys.E))
             {
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Lightning][0] > 0) return;
-                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Lightning] > Global.Instance.GameData.PlayerMana)
-                {
-                    return;
-                }
+                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Lightning] > Global.Instance.GameData.PlayerMana) return;
+
                 SetBallType(Enums.BallTypes.Lightning);
             }
             else if (Utils.Input.IsKeyPressed(Keys.R))
             {
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Explosion][0] > 0) return;
-                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Explosion] > Global.Instance.GameData.PlayerMana && Global.Instance.GameData.PlayerMana > 0)
+                if (Global.Instance.GameData.PlayerMana < Global.Instance.GameData.PlayerMaxMana / 2) return;
+
+                var effect = new Effect(_explosionTexture, 10, 1);
+                effect.SetSize(20);
+                effect.Position = new Vector2(Global.Instance.GameData.Camera.Width / 2 + 4, effect.Height / 2 - 3);
+                Global.Instance.GameData.StaticEffects.Add(effect);
+
+                Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Explosion][0] = Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Explosion][1];
+
+                foreach (var monster in Global.Instance.GameData.Monsters)
                 {
-                    return;
+                    if (!monster.IsBoss)
+                    {
+                        World.Remove(monster.Body);
+                    }
+                    else
+                    {
+                        monster.TakeDamage(monster.MaxHP * .3f);
+                    }
                 }
+
+                Global.Instance.GameData.Monsters.RemoveAll(e => !e.IsBoss);
+                Global.Instance.GameData.PlayerHP -= 100;
+                Global.Instance.GameData.PlayerMana = 0;
+
                 SetBallType(Enums.BallTypes.Explosion);
             }
         }

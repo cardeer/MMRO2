@@ -59,16 +59,12 @@ namespace MMRO2.Sprites.Player
                 if (Type == Enums.BallTypes.Ice)
                 {
                     var area = new EffectArea(World, Settings.Collision.IceArea, Body.Position, 3);
-                    Global.Instance.GameData.Effects.Add(area);
+                    Global.Instance.GameData.BulletEffects.Add(area);
                 }
                 else if (Type == Enums.BallTypes.Lightning)
                 {
                     var area = new EffectArea(World, Settings.Collision.LightningArea, Body.Position, 3);
-                    Global.Instance.GameData.Effects.Add(area);
-                }
-                else if (Type == Enums.BallTypes.Explosion)
-                {
-                    Global.Instance.GameData.ExplosionCalled = true;
+                    Global.Instance.GameData.BulletEffects.Add(area);
                 }
             }
             else
