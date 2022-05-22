@@ -10,9 +10,7 @@ namespace MMRO2
         public bool Paused = false;
         public bool PrevPaused = true;
 
-        public bool ExplosionCalled = false;
-
-        public int Wave = 1;
+        public int Wave = 3;
         public int EnemiesSpawned = 0;
         public bool BossDied = false;
         public bool BossSpawned = false;
@@ -21,12 +19,13 @@ namespace MMRO2
         public float PlayerHP = 500f;
         public float PlayerMaxHP = 500f;
 
-        public float PlayerMana = 100f;
-        public float PlayerMaxMana = 100f;
+        public float PlayerMana = 200f;
+        public float PlayerMaxMana = 200f;
 
         public List<Sprites.Player.Bullet> Bullets = new List<Sprites.Player.Bullet>();
         public List<Main.Monster> Monsters = new List<Main.Monster>();
-        public List<Sprites.EffectArea> Effects = new List<Sprites.EffectArea>();
+        public List<Sprites.EffectArea> BulletEffects = new List<Sprites.EffectArea>();
+        public List<Sprites.Effect> StaticEffects = new List<Sprites.Effect>();
 
         public World World;
         public Types.Camera Camera;
@@ -59,15 +58,13 @@ namespace MMRO2
                 World.Remove(monster.Body);
             }
 
-            foreach (var effect in Effects)
+            foreach (var effect in BulletEffects)
             {
                 World.Remove(effect.Body);
             }
 
             Paused = false;
             PrevPaused = true;
-
-            ExplosionCalled = false;
 
             EnemiesSpawned = 0;
             BossDied = false;
@@ -82,7 +79,8 @@ namespace MMRO2
 
             Bullets.Clear();
             Monsters.Clear();
-            Effects.Clear();
+            BulletEffects.Clear();
+            StaticEffects.Clear();
         }
     }
 }

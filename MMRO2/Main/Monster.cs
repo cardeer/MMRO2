@@ -11,6 +11,7 @@ namespace MMRO2.Main
     class Monster
     {
         public bool IsBoss = false;
+        public Vector2 ReduceHitbox = Vector2.Zero;
         protected Dictionary<Enums.MonsterStates, Controllers.Animation> Animations;
 
         public Enums.MonsterStates State = Enums.MonsterStates.Walking;

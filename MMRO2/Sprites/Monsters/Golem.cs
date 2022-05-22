@@ -48,7 +48,9 @@ namespace MMRO2.Sprites.Monsters
             Body.IgnoreGravity = true;
             Body.FixedRotation = true;
 
-            Body.CreateCircle(Width, 1f);
+            ReduceHitbox = new Vector2(2, 2);
+
+            Body.CreateRectangle(Width - ReduceHitbox.X, Height - ReduceHitbox.Y, 1f, Vector2.Zero);
             Body.OnCollision += Body_OnCollision;
         }
 
@@ -93,8 +95,15 @@ namespace MMRO2.Sprites.Monsters
 
                 if (_attackCooldown <= 0)
                 {
-                    Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["golem"];
-                    _attackCooldown = 3;
+                    if (Animations[State].CurrentFrame == 4)
+                    {
+                        Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["golem"];
+                        _attackCooldown = 8;
+                    }
+                }
+                else
+                {
+                    Animations[State].CurrentFrame = 0;
                 }
             }
 
