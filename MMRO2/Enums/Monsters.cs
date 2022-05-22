@@ -11,5 +11,6 @@ namespace MMRO2.Enums
         Rabbit,
         Vanir,
         SnowSlime,
+        Crocodile,
     }
 }
