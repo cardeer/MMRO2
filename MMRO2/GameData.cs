@@ -71,10 +71,10 @@ namespace MMRO2
             BossSpawned = false;
             Failed = false;
 
-            //PlayerHP = 500f;
+            PlayerHP = PlayerMaxHP;
             //PlayerMaxHP = 500f;
 
-            //PlayerMana = 100f;
+            PlayerMana = PlayerMaxMana;
             //PlayerMaxMana = 100f;
 
             Bullets.Clear();
