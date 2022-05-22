@@ -34,11 +34,11 @@ namespace MMRO2.Settings
             { 2, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime } },
             { 3, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Slime } },
             { 4, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
-            { 5, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
-            { 6, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir } },
-            { 7, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime } },
-            { 8, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime } },
-            { 9, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime } },
+            { 5, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir, Enums.Monsters.Crocodile, Enums.Monsters.Crocodile } },
+            { 6, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir, Enums.Monsters.Crocodile, Enums.Monsters.Crocodile } },
+            { 7, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir, Enums.Monsters.Crocodile, Enums.Monsters.Crocodile, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime } },
+            { 8, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir, Enums.Monsters.Crocodile, Enums.Monsters.Crocodile, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime } },
+            { 9, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Vanir, Enums.Monsters.Vanir, Enums.Monsters.Crocodile, Enums.Monsters.Crocodile, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.Rabbit, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime, Enums.Monsters.SnowSlime } },
         };
 
         public static readonly Dictionary<Enums.BallTypes, float> ManaUsage = new Dictionary<Enums.BallTypes, float>()
