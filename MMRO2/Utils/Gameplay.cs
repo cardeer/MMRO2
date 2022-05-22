@@ -18,6 +18,7 @@ namespace MMRO2.Utils
             else if (monster == Enums.Monsters.Rabbit) return new Sprites.Monsters.Rabbit(world);
             else if (monster == Enums.Monsters.Vanir) return new Sprites.Monsters.Vanir(world);
             else if (monster == Enums.Monsters.SnowSlime) return new Sprites.Monsters.SnowSlime(world);
+            else if (monster == Enums.Monsters.Crocodile) return new Sprites.Monsters.Crocodile(world);
 
             return null;
         }

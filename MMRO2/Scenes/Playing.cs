@@ -135,6 +135,30 @@ namespace MMRO2.Scenes
         {
             //HandleCamera();
 
+            foreach (var effect in Global.Instance.GameData.BulletEffects)
+            {
+                effect.Update();
+            }
+
+            foreach (var effect in Global.Instance.GameData.StaticEffects)
+            {
+                effect.Update();
+            }
+
+            Global.Instance.GameData.StaticEffects.RemoveAll(e => e.ShouldRemove);
+
+            Global.Instance.GameData.BulletEffects.RemoveAll(e => e.Time >= .1);
+
+            foreach (var monster in Global.Instance.GameData.Monsters)
+            {
+                if (monster.ShouldRemove)
+                {
+                    World.Remove(monster.Body);
+                }
+            }
+
+            Global.Instance.GameData.Monsters.RemoveAll(e => e.ShouldRemove);
+
             if (Global.Instance.GameData.Failed || Global.Instance.GameData.BossDied)
             {
                 _resulBoard.Update();
@@ -155,14 +179,7 @@ namespace MMRO2.Scenes
             foreach (var monster in Global.Instance.GameData.Monsters)
             {
                 monster.Update();
-
-                if (monster.ShouldRemove)
-                {
-                    World.Remove(monster.Body);
-                }
             }
-
-            Global.Instance.GameData.Monsters.RemoveAll(e => e.ShouldRemove);
 
             if (_accumulatedSeconds >= _spawnSeconds)
             {
@@ -200,27 +217,9 @@ namespace MMRO2.Scenes
                 _accumulatedSeconds += (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            foreach (var effect in Global.Instance.GameData.BulletEffects)
-            {
-                effect.Update();
-            }
-
-            foreach (var effect in Global.Instance.GameData.StaticEffects)
-            {
-                effect.Update();
-            }
-
-            Global.Instance.GameData.StaticEffects.RemoveAll(e => e.ShouldRemove);
-
-            Global.Instance.GameData.BulletEffects.RemoveAll(e => e.Time >= .1);
-
             if (Global.Instance.GameData.PlayerHP <= 0)
             {
                 Global.Instance.GameData.Failed = true;
-            }
-            else if (Global.Instance.GameData.BossDied)
-            {
-
             }
 
             if (Global.Instance.GameData.Wave >= 4) _BG.setTexture(_bgHalloweenTexture);

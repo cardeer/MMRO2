@@ -22,6 +22,7 @@ namespace MMRO2.Settings
             { "slime", 30 },
             { "rabbit", 40 },
             { "vanir", 50 },
+            { "crocodile", 30 },
             { "frog", 40 },
             { "golem", 80 },
             { "shogun", 100 },
