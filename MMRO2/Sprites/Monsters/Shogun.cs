@@ -48,7 +48,7 @@ namespace MMRO2.Sprites.Monsters
             Body.IgnoreGravity = true;
             Body.FixedRotation = true;
 
-            Body.CreateRectangle(Width, Height, 1f, Vector2.Zero);
+            Body.CreateRectangle(Width - 5, Height - 3, 1f, Vector2.Zero);
             Body.OnCollision += Body_OnCollision;
         }
 
