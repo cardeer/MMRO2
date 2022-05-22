@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using tainicom.Aether.Physics2D.Dynamics;
 
 namespace MMRO2.Sprites.Player
@@ -58,11 +59,31 @@ namespace MMRO2.Sprites.Player
 
                 if (Type == Enums.BallTypes.Ice)
                 {
+                    Texture2D texture = Global.Instance.Content.Load<Texture2D>("images/effects/ice");
+                    var effect = new Effect(texture, 10, 1);
+                    effect.SetSize(5);
+                    effect.Position = Body.Position;
+                    Global.Instance.GameData.StaticEffects.Add(effect);
+
                     var area = new EffectArea(World, Settings.Collision.IceArea, Body.Position, 3);
                     Global.Instance.GameData.BulletEffects.Add(area);
                 }
+                else if (Type == Enums.BallTypes.Fire)
+                {
+                    Texture2D texture = Global.Instance.Content.Load<Texture2D>("images/effects/fire");
+                    var effect = new Effect(texture, 6, 1);
+                    effect.SetSize(3);
+                    effect.Position = Body.Position;
+                    Global.Instance.GameData.StaticEffects.Add(effect);
+                }
                 else if (Type == Enums.BallTypes.Lightning)
                 {
+                    Texture2D texture = Global.Instance.Content.Load<Texture2D>("images/effects/lightning");
+                    var effect = new Effect(texture, 10, 1);
+                    effect.SetSize(6);
+                    effect.Position = Body.Position;
+                    Global.Instance.GameData.StaticEffects.Add(effect);
+
                     var area = new EffectArea(World, Settings.Collision.LightningArea, Body.Position, 3);
                     Global.Instance.GameData.BulletEffects.Add(area);
                 }
