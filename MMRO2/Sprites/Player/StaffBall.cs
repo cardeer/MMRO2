@@ -46,12 +46,12 @@ namespace MMRO2.Sprites.Player
             }
         }
 
-        public void SetTexture(Texture2D texture, int partsX = 1, int partsY = 1)
+        public void SetTexture(Texture2D texture, int partsX = 1, int partsY = 1, float reduce = 0)
         {
             var tmpAnimation = new Controllers.Animation(texture, partsX, partsY);
-            Height = Width / ((float)tmpAnimation.FrameWidth / (float)tmpAnimation.FrameHeight);
+            Height = (Width - reduce) / ((float)tmpAnimation.FrameWidth / (float)tmpAnimation.FrameHeight);
             _textureSize = new Vector2(tmpAnimation.FrameWidth, tmpAnimation.FrameHeight);
-            _scale = new Vector2(Width, Height) / _textureSize;
+            _scale = new Vector2(Width - reduce, Height) / _textureSize;
 
             _animation = tmpAnimation;
         }

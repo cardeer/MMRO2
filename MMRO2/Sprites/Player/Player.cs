@@ -294,7 +294,7 @@ namespace MMRO2.Sprites.Player
             switch (type)
             {
                 case Enums.BallTypes.Normal:
-                    _staffBall.SetTexture(_ballTexture, 1, 1);
+                    _staffBall.SetTexture(_ballTexture, 1, 1, 0.5f);
                     break;
                 case Enums.BallTypes.Fire:
                     _staffBall.SetTexture(_fireBallTexture, 6, 1);
