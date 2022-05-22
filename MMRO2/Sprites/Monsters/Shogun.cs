@@ -93,8 +93,15 @@ namespace MMRO2.Sprites.Monsters
 
                 if (_attackCooldown <= 0)
                 {
-                    Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["shogun"];
-                    _attackCooldown = 3;
+                    if (Animations[State].CurrentFrame == 3)
+                    {
+                        Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["shogun"];
+                        _attackCooldown = 10;
+                    }
+                }
+                else
+                {
+                    Animations[State].CurrentFrame = 0;
                 }
             }
 

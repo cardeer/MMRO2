@@ -10,7 +10,7 @@ namespace MMRO2
         public bool Paused = false;
         public bool PrevPaused = true;
 
-        public int Wave = 3;
+        public int Wave = 1;
         public int EnemiesSpawned = 0;
         public bool BossDied = false;
         public bool BossSpawned = false;

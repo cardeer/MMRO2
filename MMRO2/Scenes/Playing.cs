@@ -97,7 +97,6 @@ namespace MMRO2.Scenes
             _stand.Position = _player.Position + new Vector2(0, -_player.Height / 2 - _stand.Height / 2);
             _map.Add(_stand);
 
-
             _pauseBackgroundTexture = Utils.Sprite.Factory.CreateRectangle(Settings.Window.Width, Settings.Window.Height, Color.Black);
 
             _spawnSeconds = _random.Next(2, 5);
