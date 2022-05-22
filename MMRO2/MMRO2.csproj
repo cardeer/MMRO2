@@ -32,6 +32,7 @@
   <ItemGroup>
     <Folder Include="Content\images\monsters\" />
     <Folder Include="Content\images\balls\" />
+    <Folder Include="Content\images\effects\" />
     <Folder Include="Content\images\staff_balls\" />
     <Folder Include="Objects\" />
     <Folder Include="Scenes\Maps\" />

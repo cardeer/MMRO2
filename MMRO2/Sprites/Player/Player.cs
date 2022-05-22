@@ -161,6 +161,11 @@ namespace MMRO2.Sprites.Player
                     _ballType
                 );
 
+                if (_ballType != Enums.BallTypes.Normal)
+                {
+                    Global.Instance.GameData.SkillCooldown[_ballType][0] = Global.Instance.GameData.SkillCooldown[_ballType][1];
+                }
+
                 Global.Instance.GameData.Bullets.Add(bullet);
 
                 SetBallType(Enums.BallTypes.Normal);
@@ -182,12 +187,32 @@ namespace MMRO2.Sprites.Player
 
                 foreach (var monster in Global.Instance.GameData.Monsters)
                 {
-                    World.Remove(monster.Body);
+                    if (!monster.IsBoss)
+                    {
+                        World.Remove(monster.Body);
+                    }
+                    else
+                    {
+                        monster.TakeDamage(monster.MaxHP * .3f);
+                    }
                 }
 
-                Global.Instance.GameData.Monsters.Clear();
+                Global.Instance.GameData.Monsters.RemoveAll(e => !e.IsBoss) ;
 
                 Global.Instance.GameData.PlayerHP -= 100;
+            }
+
+            foreach (var key in Global.Instance.GameData.SkillCooldown.Keys)
+            {
+                if (Global.Instance.GameData.SkillCooldown[key][0] > 0)
+                {
+                    Global.Instance.GameData.SkillCooldown[key][0] -= (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
+
+                    if (Global.Instance.GameData.SkillCooldown[key][0] < 0)
+                    {
+                        Global.Instance.GameData.SkillCooldown[key][0] = 0;
+                    }
+                }
             }
 
             base.Update();
@@ -294,18 +319,22 @@ namespace MMRO2.Sprites.Player
         {
             if (Utils.Input.IsKeyPressed(Keys.Q))
             {
+                if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Ice][0] > 0) return;
                 SetBallType(Enums.BallTypes.Ice);
             }
             else if (Utils.Input.IsKeyPressed(Keys.W))
             {
+                if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Fire][0] > 0) return;
                 SetBallType(Enums.BallTypes.Fire);
             }
             else if (Utils.Input.IsKeyPressed(Keys.E))
             {
+                if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Lightning][0] > 0) return;
                 SetBallType(Enums.BallTypes.Lightning);
             }
             else if (Utils.Input.IsKeyPressed(Keys.R))
             {
+                if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Explosion][0] > 0) return;
                 SetBallType(Enums.BallTypes.Explosion);
             }
         }

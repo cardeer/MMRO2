@@ -38,6 +38,13 @@ namespace MMRO2.Scenes.UI
         private Sprites.Buttons _lightningButton;
         private Sprites.Buttons _explosionButton;
 
+        private Texture2D _cooldownTexture;
+        private Vector2 _cooldownSize = new Vector2(50, 10);
+        private Sprites.Rectangle _iceCooldown;
+        private Sprites.Rectangle _fireCooldown;
+        private Sprites.Rectangle _lightningCooldown;
+        private Sprites.Rectangle _explosionCooldown;
+
         //Font
         private SpriteFont _font;
 
@@ -99,28 +106,45 @@ namespace MMRO2.Scenes.UI
             _manaBarValue.Position = new Vector2(_manaBar.Position.X, _manaBar.Position.Y);
 
             //Skill Button
+            _cooldownTexture = Utils.Sprite.Factory.CreateRectangle(1, 1, Color.Black);
+
             _iceButton = new Sprites.Buttons(_iceBallTex, _font, "", _iceBallTex.Width / 25, _iceBallTex.Height / 25);
             _iceButton.Origin = new Vector2(_iceBallTex.Width / 2, _iceBallTex.Height / 2);
             _iceButton.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.Height - 120);
+
+            _iceCooldown = new Sprites.Rectangle(_cooldownTexture, (int)_cooldownSize.X, (int)_cooldownSize.Y);
+            _iceCooldown.Origin = new Vector2(.5f, 0);
+            _iceCooldown.Position = _iceButton.Position + new Vector2(0, 35);
 
             _fireButton = new Sprites.Buttons(_fireBallTex, _font, "", _fireBallTex.Width / 25, _fireBallTex.Height / 25);
             _fireButton.Origin = new Vector2(_fireBallTex.Width / 2, _fireBallTex.Height / 2);
             _fireButton.Position = new Vector2(_iceButton.Position.X + 70, _iceButton.Position.Y);
 
+            _fireCooldown = new Sprites.Rectangle(_cooldownTexture, (int)_cooldownSize.X, (int)_cooldownSize.Y);
+            _fireCooldown.Origin = new Vector2(.5f, 0);
+            _fireCooldown.Position = _fireButton.Position + new Vector2(0, 35);
+
             _lightningButton = new Sprites.Buttons(_lightningBallTex, _font, "", _lightningBallTex.Width / 25, _lightningBallTex.Height / 25);
             _lightningButton.Origin = new Vector2(_lightningBallTex.Width / 2, _lightningBallTex.Height / 2);
             _lightningButton.Position = new Vector2(_fireButton.Position.X + 70, _fireButton.Position.Y);
 
+            _lightningCooldown = new Sprites.Rectangle(_cooldownTexture, (int)_cooldownSize.X, (int)_cooldownSize.Y);
+            _lightningCooldown.Origin = new Vector2(.5f, 0);
+            _lightningCooldown.Position = _lightningButton.Position + new Vector2(0, 35);
+
             _explosionButton = new Sprites.Buttons(_explosionTex, _font, "", _explosionTex.Width / 25, _explosionTex.Height / 25);
             _explosionButton.Origin = new Vector2(_explosionTex.Width / 2, _explosionTex.Height / 2);
             _explosionButton.Position = new Vector2(_lightningButton.Position.X + 70, _lightningButton.Position.Y);
+
+            _explosionCooldown = new Sprites.Rectangle(_cooldownTexture, (int)_cooldownSize.X, (int)_cooldownSize.Y);
+            _explosionCooldown.Origin = new Vector2(.5f, 0);
+            _explosionCooldown.Position = _explosionButton.Position + new Vector2(0, 35);
 
             //Call Function
             _iceButton.Click += iceButton_clicked;
             _fireButton.Click += fireButton_clicked;
             _lightningButton.Click += lightningButton_clicked;
             _explosionButton.Click += explosionButton_clicked;
-
 
             _stateBarList.Add(BG);
             _stateBarList.Add(player);
@@ -136,12 +160,57 @@ namespace MMRO2.Scenes.UI
             _buttonList.Add(_lightningButton);
             _buttonList.Add(_explosionButton);
 
+            _stateBarList.Add(_iceCooldown);
+            _stateBarList.Add(_fireCooldown);
+            _stateBarList.Add(_lightningCooldown);
+            _stateBarList.Add(_explosionCooldown);
         }
 
         public override void Update()
         {
             _hpBarValue.Scale = new Vector2(Global.Instance.GameData.PlayerHP / Global.Instance.GameData.PlayerMaxHP, 1);
             _manaBarValue.Scale = new Vector2(Global.Instance.GameData.PlayerMana / Global.Instance.GameData.PlayerMaxMana, 1);
+
+            _iceCooldown.Scale = new Vector2(Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Ice][0] / Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Ice][1] * _cooldownSize.X, _cooldownSize.Y);
+            _fireCooldown.Scale = new Vector2(Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Fire][0] / Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Fire][1] * _cooldownSize.X, _cooldownSize.Y);
+            _lightningCooldown.Scale = new Vector2(Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Lightning][0] / Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Lightning][1] * _cooldownSize.X, _cooldownSize.Y);
+            _explosionCooldown.Scale = new Vector2(Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Explosion][0] / Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Explosion][1] * _cooldownSize.X, _cooldownSize.Y);
+
+            if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Ice][0] > 0)
+            {
+                _iceButton.Disabled = true;
+            }
+            else
+            {
+                _iceButton.Disabled = false;
+            }
+
+            if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Fire][0] > 0)
+            {
+                _fireButton.Disabled = true;
+            }
+            else
+            {
+                _fireButton.Disabled = false;
+            }
+
+            if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Lightning][0] > 0)
+            {
+                _lightningButton.Disabled = true;
+            }
+            else
+            {
+                _lightningButton.Disabled = false;
+            }
+
+            if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Explosion][0] > 0)
+            {
+                _explosionButton.Disabled = true;
+            }
+            else
+            {
+                _explosionButton.Disabled = false;
+            }
 
             foreach (var button in _buttonList)
             {

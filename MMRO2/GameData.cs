@@ -12,7 +12,7 @@ namespace MMRO2
 
         public bool ExplosionCalled = false;
 
-        public int Wave = 6;
+        public int Wave = 3;
         public int EnemiesSpawned = 0;
         public bool BossDied = false;
         public bool BossSpawned = false;
@@ -30,6 +30,14 @@ namespace MMRO2
 
         public World World;
         public Types.Camera Camera;
+
+        public Dictionary<Enums.BallTypes, float[]> SkillCooldown = new Dictionary<Enums.BallTypes, float[]>()
+        {
+            { Enums.BallTypes.Ice, new float[]{ 3, 3 } },
+            { Enums.BallTypes.Fire, new float[]{ 5, 5 } },
+            { Enums.BallTypes.Lightning, new float[]{ 15, 15 } },
+            { Enums.BallTypes.Explosion, new float[]{ 30, 30 } }
+        };
 
         public Dictionary<Enums.Perks, float> Perks = new Dictionary<Enums.Perks, float>()
         {

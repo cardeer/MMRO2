@@ -10,7 +10,7 @@ namespace MMRO2.Sprites.Monsters
 {
     class Frog : Main.Monster
     {
-        public float Speed = 1;
+        public float Speed = 2;
 
         private bool _slow = false;
         private float _slowTime = 0;
@@ -27,6 +27,10 @@ namespace MMRO2.Sprites.Monsters
         public Frog(World world) : base(world)
         {
             Height = 5;
+
+            IsBoss = true;
+
+            HP = MaxHP = 1000;
 
             Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/frog");
             Texture2D animation2 = Global.Instance.Content.Load<Texture2D>("images/monsters/frog_attack");
@@ -77,7 +81,7 @@ namespace MMRO2.Sprites.Monsters
         {
             Body.LinearVelocity = new Vector2(-Speed, 0);
 
-            if (Body.Position.X <= Settings.Gameplay.PlayerBasePosition + Width / 2 + 3)
+            if (Body.Position.X <= Settings.Gameplay.PlayerBasePosition + Width / 2)
             {
                 State = Enums.MonsterStates.Attacking;
                 Body.LinearVelocity = Vector2.Zero;
@@ -89,8 +93,15 @@ namespace MMRO2.Sprites.Monsters
 
                 if (_attackCooldown <= 0)
                 {
-                    Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["cabbage"];
-                    _attackCooldown = 3;
+                    if (Animations[State].CurrentFrame == 3)
+                    {
+                        Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["frog"];
+                        _attackCooldown = 5;
+                    }
+                }
+                else
+                {
+                    Animations[State].CurrentFrame = 0;
                 }
             }
 
@@ -156,16 +167,6 @@ namespace MMRO2.Sprites.Monsters
             );
 
             base.Draw();
-        }
-
-        public override void TakeDamage(float amount)
-        {
-            base.TakeDamage(amount);
-
-            if (HP <= 0)
-            {
-                Global.Instance.GameData.BossDied = true;
-            }
         }
     }
 }

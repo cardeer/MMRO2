@@ -10,7 +10,7 @@ namespace MMRO2.Sprites.Monsters
 {
     class Shogun : Main.Monster
     {
-        public float Speed = 1;
+        public float Speed = 2;
 
         private bool _slow = false;
         private float _slowTime = 0;
@@ -26,7 +26,11 @@ namespace MMRO2.Sprites.Monsters
 
         public Shogun(World world) : base(world)
         {
-            Height = 5;
+            Height = 10;
+
+            IsBoss = true;
+
+            HP = MaxHP = 3000;
 
             Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/shogun");
             Texture2D animation2 = Global.Instance.Content.Load<Texture2D>("images/monsters/shogun_attack");
@@ -77,7 +81,7 @@ namespace MMRO2.Sprites.Monsters
         {
             Body.LinearVelocity = new Vector2(-Speed, 0);
 
-            if (Body.Position.X <= Settings.Gameplay.PlayerBasePosition + Width / 2 + 3)
+            if (Body.Position.X <= Settings.Gameplay.PlayerBasePosition + Width / 2)
             {
                 State = Enums.MonsterStates.Attacking;
                 Body.LinearVelocity = Vector2.Zero;
@@ -89,7 +93,7 @@ namespace MMRO2.Sprites.Monsters
 
                 if (_attackCooldown <= 0)
                 {
-                    Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["cabbage"];
+                    Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["shogun"];
                     _attackCooldown = 3;
                 }
             }
@@ -156,16 +160,6 @@ namespace MMRO2.Sprites.Monsters
             );
 
             base.Draw();
-        }
-
-        public override void TakeDamage(float amount)
-        {
-            base.TakeDamage(amount);
-
-            if (HP <= 0)
-            {
-                Global.Instance.GameData.BossDied = true;
-            }
         }
     }
 }

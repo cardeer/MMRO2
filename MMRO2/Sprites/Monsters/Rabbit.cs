@@ -10,6 +10,7 @@ namespace MMRO2.Sprites.Monsters
 {
     class Rabbit : Main.Monster
     {
+        private float _originSpeed = 3;
         public float Speed = 3;
 
         private bool _slow = false;
@@ -88,7 +89,7 @@ namespace MMRO2.Sprites.Monsters
                 {
                     _slow = false;
                     _slowTime = 0;
-                    Speed = 1;
+                    Speed = _originSpeed;
                 }
             }
 

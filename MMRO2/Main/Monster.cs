@@ -10,6 +10,7 @@ namespace MMRO2.Main
 {
     class Monster
     {
+        public bool IsBoss = false;
         protected Dictionary<Enums.MonsterStates, Controllers.Animation> Animations;
 
         public Enums.MonsterStates State = Enums.MonsterStates.Walking;
@@ -41,12 +42,6 @@ namespace MMRO2.Main
 
         public virtual void Update()
         {
-            if (HP <= 0)
-            {
-                HP = 0;
-                ShouldRemove = true;
-            }
-
             Animations[State].Update();
         }
 
@@ -75,6 +70,11 @@ namespace MMRO2.Main
             {
                 HP = 0;
                 ShouldRemove = true;
+
+                if (IsBoss)
+                {
+                    Global.Instance.GameData.BossDied = true;
+                }
             }
         }
     }

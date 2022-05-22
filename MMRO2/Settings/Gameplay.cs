@@ -19,7 +19,10 @@ namespace MMRO2.Settings
         public static readonly Dictionary<string, int> Damages = new Dictionary<string, int>()
         {
             { "cabbage", 10 },
-            { "slime", 10 }
+            { "slime", 10 },
+            { "frog", 50 },
+            { "golem", 80 },
+            { "shogun", 100 }
         };
 
         public static readonly Dictionary<int, Enums.Monsters[]> MonsterList = new Dictionary<int, Enums.Monsters[]>()
@@ -32,9 +35,9 @@ namespace MMRO2.Settings
             { 6, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit } },
             { 7, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit, Enums.Monsters.Vanir } },
             { 8, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit, Enums.Monsters.Vanir } },
-            { 9, new Enums.Monsters[]{ Enums.Monsters.Cabbage, Enums.Monsters.Slime, Enums.Monsters.Rabbit, Enums.Monsters.Vanir } },
+            { 9, new Enums.Monsters[]{ Enums.Monsters.SnowSlime } },
         };
 
-        public static readonly int[] MonsterCount = new int[] { 10, 12, 15, 17, 20, 1, 25, 28, 30 };
+        public static readonly int[] MonsterCount = new int[] { 10, 12, 1, 17, 20, 23, 25, 28, 30 };
     }
 }

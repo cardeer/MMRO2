@@ -20,6 +20,8 @@ namespace MMRO2.Sprites
 
         private Vector2 _originScale;
 
+        public bool Disabled = false;
+
         public Buttons(Texture2D texture, SpriteFont font, String text, int width, int height) : base(texture)
         {
             _width = width;
@@ -75,7 +77,7 @@ namespace MMRO2.Sprites
 
         public override void Draw()
         {
-            if (_isHovering)
+            if (_isHovering || Disabled)
             {
                 _color = Color.Gray;
             }
