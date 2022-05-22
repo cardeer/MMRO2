@@ -259,6 +259,21 @@ namespace MMRO2.Scenes.UI
                 SpriteEffects.None,
                 0f
             );
+
+            str = $"Wave {Global.Instance.GameData.Wave} / 9";
+            stringSize = _font.MeasureString(str);
+
+            Global.Instance.SpriteBatch.DrawString(
+                _font,
+                str,
+                new Vector2(Settings.Window.Width - 150, Settings.Window.Height - 120),
+                Color.Black,
+                0f,
+                new Vector2(stringSize.X, stringSize.Y / 2),
+                1f,
+                SpriteEffects.None,
+                0f
+            );
         }
 
         public void iceButton_clicked(object sender, EventArgs args)
