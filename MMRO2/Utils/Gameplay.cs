@@ -31,9 +31,9 @@ namespace MMRO2.Utils
             return null;
         }
 
-        public static List<int> GetAvailablePerks()
+        public static List<Enums.Perks> GetAvailablePerks()
         {
-            List<int> list = new List<int>();
+            List<Enums.Perks> list = new List<Enums.Perks>();
 
             var perks = Global.Instance.GameData.Perks;
             var keys = perks.Keys;
@@ -42,11 +42,34 @@ namespace MMRO2.Utils
             {
                 if (perks[key] < 3)
                 {
-                    list.Add((int)key);
+                    list.Add(key);
                 }
             }
 
             return list;
+        }
+
+        public static int[,] RandomUpgradePerk()
+        {
+            int[,] perks = new int[3,2];
+            List<Enums.Perks> available = GetAvailablePerks();
+
+            Random random = new Random();
+            int ran = random.Next(0, available.Count);
+            perks[0, 0] = (int)available[ran];
+            perks[0, 1] = Global.Instance.GameData.Perks[available[ran]] + 1;
+            available.RemoveAt(ran);
+
+            ran = random.Next(0, available.Count);
+            perks[1, 0] = (int)available[ran];
+            perks[1, 1] = Global.Instance.GameData.Perks[available[ran]] + 1;
+            available.RemoveAt(ran);
+
+            ran = random.Next(0, available.Count);
+            perks[2, 0] = (int)available[ran];
+            perks[2, 1] = Global.Instance.GameData.Perks[available[ran]] + 1;
+
+            return perks;
         }
     }
 }
