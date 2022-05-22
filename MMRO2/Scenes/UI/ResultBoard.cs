@@ -3,121 +3,139 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using tainicom.Aether.Physics2D.Dynamics;
 
 namespace MMRO2.Scenes.UI
 {
-	class ResultBoard : Main.SceneComponent
-	{
-		private Texture2D _winTex;
-		private Texture2D _loseTex;
-		private Texture2D _buttonTex;
+    class ResultBoard : Main.SceneComponent
+    {
+        private Texture2D _winTex;
+        private Texture2D _loseTex;
+        private Texture2D _buttonTex;
 
-		private Sprites.Rectangle _winboard;
-		private Sprites.Rectangle _loseboard;
+        private Sprites.Rectangle _winboard;
+        private Sprites.Rectangle _loseboard;
 
-		private Sprites.Buttons _replayButton;
-		private Sprites.Buttons _quitButton;
-		private Sprites.Buttons _continueButton;
-		private Sprites.Buttons _homeButton;
+        private Sprites.Buttons _replayButton;
+        private Sprites.Buttons _quitButton;
+        private Sprites.Buttons _continueButton;
+        private Sprites.Buttons _homeButton;
+        private Sprites.Buttons _winHomeButton;
 
-		private SpriteFont _font;
+        private SpriteFont _font;
 
-		public UI.SelectCards selectCard = new UI.SelectCards();
+        public ResultBoard()
+        {
+            //Load Content
+            _font = Global.Instance.Content.Load<SpriteFont>("fonts/font20");
 
-		public ResultBoard()
-		{	
-			//Load Content
-			_font = Global.Instance.Content.Load<SpriteFont>("fonts/font20");
+            _winTex = Global.Instance.Content.Load<Texture2D>("images/ui/Board_Win");
+            _loseTex = Global.Instance.Content.Load<Texture2D>("images/ui/Board_Lose");
 
-			_winTex = Global.Instance.Content.Load<Texture2D>("images/ui/Board_Win");
-			_loseTex = Global.Instance.Content.Load<Texture2D>("images/ui/Board_Lose");
-
-			_buttonTex = Global.Instance.Content.Load<Texture2D>("images/ui/main_button");
+            _buttonTex = Global.Instance.Content.Load<Texture2D>("images/ui/main_button");
 
 
-			//Create Object
-			_winboard = new Sprites.Rectangle(_winTex, _winTex.Width / 2, _winTex.Height / 2);
-			_winboard.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight - 60);
+            //Create Object
+            _winboard = new Sprites.Rectangle(_winTex, _winTex.Width / 2, _winTex.Height / 2);
+            _winboard.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight - 60);
 
-			_loseboard = new Sprites.Rectangle(_loseTex, _loseTex.Width / 2, _loseTex.Height / 2);
-			_loseboard.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight - 60);
+            _loseboard = new Sprites.Rectangle(_loseTex, _loseTex.Width / 2, _loseTex.Height / 2);
+            _loseboard.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight - 60);
 
-			_replayButton = new Sprites.Buttons(_buttonTex, _font, "REPLAY", _buttonTex.Width / 4, _buttonTex.Height / 4);
-			_replayButton.Position = new Vector2(Settings.Window.HalfWidth - 120, Settings.Window.HalfHeight);
-			_replayButton.setTextColor(Color.White);
+            _replayButton = new Sprites.Buttons(_buttonTex, _font, "REPLAY", _buttonTex.Width / 4, _buttonTex.Height / 4);
+            _replayButton.Position = new Vector2(Settings.Window.HalfWidth - 120, Settings.Window.HalfHeight);
+            _replayButton.setTextColor(Color.White);
 
-			_homeButton = new Sprites.Buttons(_buttonTex, _font, "HOME", _buttonTex.Width / 4, _buttonTex.Height / 4);
-			_homeButton.Position = new Vector2(Settings.Window.HalfWidth + 120, Settings.Window.HalfHeight);
-			_homeButton.setTextColor(Color.White);
+            _homeButton = new Sprites.Buttons(_buttonTex, _font, "HOME", _buttonTex.Width / 4, _buttonTex.Height / 4);
+            _homeButton.Position = new Vector2(Settings.Window.HalfWidth + 120, Settings.Window.HalfHeight);
+            _homeButton.setTextColor(Color.White);
 
-			_quitButton = new Sprites.Buttons(_buttonTex, _font, "QUIT", _buttonTex.Width / 4, _buttonTex.Height / 4);
-			_quitButton.Position = new Vector2(Settings.Window.HalfWidth - 120, Settings.Window.HalfHeight);
-			_quitButton.setTextColor(Color.White);
+            _quitButton = new Sprites.Buttons(_buttonTex, _font, "QUIT", _buttonTex.Width / 4, _buttonTex.Height / 4);
+            _quitButton.Position = new Vector2(Settings.Window.HalfWidth - 120, Settings.Window.HalfHeight);
+            _quitButton.setTextColor(Color.White);
 
-			_continueButton = new Sprites.Buttons(_buttonTex, _font, "CONTINUE", _buttonTex.Width / 4, _buttonTex.Height / 4);
-			_continueButton.Position = new Vector2(Settings.Window.HalfWidth + 120, Settings.Window.HalfHeight);
-			_continueButton.setTextColor(Color.White);
+            _continueButton = new Sprites.Buttons(_buttonTex, _font, "CONTINUE", _buttonTex.Width / 4, _buttonTex.Height / 4);
+            _continueButton.Position = new Vector2(Settings.Window.HalfWidth + 120, Settings.Window.HalfHeight);
+            _continueButton.setTextColor(Color.White);
 
-			_replayButton.Click += _replayButton_clicked;
-			_homeButton.Click += _homeButton_clicked;
+            _winHomeButton = new Sprites.Buttons(_buttonTex, _font, "HOME", _buttonTex.Width / 4, _buttonTex.Height / 4);
+            _winHomeButton.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight);
+            _winHomeButton.setTextColor(Color.White);
 
-			_continueButton.Click += _continueButton_clicked;
-			_quitButton.Click += _quitButton_clicked;
-		}
+            _replayButton.Click += _replayButton_clicked;
+            _homeButton.Click += _homeButton_clicked;
 
-		public override void Update()
-		{
-			if (Global.Instance.GameData.Failed)
-			{
-				_replayButton.Update();
-				_homeButton.Update();
-			}
-			else if (Global.Instance.GameData.BossDied)
-			{
-				_quitButton.Update();
-				_continueButton.Update();
-			}
-		}
+            _continueButton.Click += _continueButton_clicked;
+            _quitButton.Click += _quitButton_clicked;
 
-		public override void Draw()
-		{
-			if (Global.Instance.GameData.Failed)
-			{
-				_loseboard.Draw();
+            _winHomeButton.Click += _homeButton_clicked;
+        }
 
-				_replayButton.Draw();
-				_homeButton.Draw();
-			}
-			else if (Global.Instance.GameData.BossDied)
-			{
-				_winboard.Draw();
+        public override void Update()
+        {
+            if (Global.Instance.GameData.Failed)
+            {
+                _replayButton.Update();
+                _homeButton.Update();
+            }
+            else if (Global.Instance.GameData.BossDied)
+            {
+                if (Global.Instance.GameData.Wave == 9)
+                {
+                    _winHomeButton.Update();
+                }
+                else
+                {
+                    _quitButton.Update();
+                    _continueButton.Update();
+                }
+            }
+        }
 
-				_quitButton.Draw();
-				_continueButton.Draw();
-			}
-		}
+        public override void Draw()
+        {
+            if (Global.Instance.GameData.Failed)
+            {
+                _loseboard.Draw();
 
-		public void _replayButton_clicked(object sender, EventArgs args)
-		{
-			Global.Instance.GameData.Reset();
-			Global.Instance.GameData.Wave = 1;
-		}
+                _replayButton.Draw();
+                _homeButton.Draw();
+            }
+            else if (Global.Instance.GameData.BossDied)
+            {
+                _winboard.Draw();
 
-		public void _homeButton_clicked(object sender, EventArgs args)
-		{
-			Utils.Scene.Control.ChangeScene(Enums.Scenes.Home);
-		}
+                if (Global.Instance.GameData.Wave == 9)
+                {
+                    _winHomeButton.Draw();
+                }
+                else
+                {
+                    _quitButton.Draw();
+                    _continueButton.Draw();
+                }
+            }
+        }
 
-		public void _quitButton_clicked(object sender, EventArgs args)
-		{
-			Game1.Quit();
-		}
+        public void _replayButton_clicked(object sender, EventArgs args)
+        {
+            Global.Instance.GameData = Global.Instance.GameData.GetNew();
+        }
 
-		public void _continueButton_clicked(object sender, EventArgs args)
-		{
-			Global.Instance.GameData.Reset();
-			Global.Instance.GameData.Wave++;
-			selectCard.Draw();
-		}
-	}
+        public void _homeButton_clicked(object sender, EventArgs args)
+        {
+            Utils.Scene.Control.ChangeScene(Enums.Scenes.Home);
+        }
+
+        public void _quitButton_clicked(object sender, EventArgs args)
+        {
+            Game1.Quit();
+        }
+
+        public void _continueButton_clicked(object sender, EventArgs args)
+        {
+            Global.Instance.GameData.Reset();
+            Global.Instance.GameData.Wave++;
+        }
+    }
 }

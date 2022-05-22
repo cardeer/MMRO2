@@ -45,6 +45,10 @@ namespace MMRO2.Sprites.Player
         private bool _canShoot = true;
         private float _shootSeconds = 0;
 
+        private int _additionalBullets = (int)Utils.Stats.NumberOfBullets();
+
+        private float _manaRegenerationTime = 0;
+
         public Player(World world) : base(world)
         {
             Texture = _playerBodyTexture;
@@ -163,10 +167,16 @@ namespace MMRO2.Sprites.Player
 
             if (!Global.Instance.GameData.PrevPaused && _canShoot && Utils.Input.IsLeftMouseClicked())
             {
-                _canShoot = false;
+                _additionalBullets--;
 
-                float manaUsage = Settings.Gameplay.ManaUsage[_ballType];
-                if (manaUsage == -1) manaUsage = Global.Instance.GameData.PlayerMana;
+                if (_additionalBullets <= 0)
+                {
+                    _canShoot = false;
+                    _additionalBullets = (int)Utils.Stats.NumberOfBullets();
+                }
+
+                float reduceScale = 1 - (Utils.Stats.ReduceManaUsage() / 100);
+                float manaUsage = Settings.Gameplay.ManaUsage[_ballType] * reduceScale;
 
                 Global.Instance.GameData.PlayerMana -= manaUsage;
 
@@ -210,6 +220,21 @@ namespace MMRO2.Sprites.Player
                     {
                         Global.Instance.GameData.SkillCooldown[key][0] = 0;
                     }
+                }
+            }
+
+            _manaRegenerationTime += (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
+
+            // if player has mana regeneration perk
+            if (_manaRegenerationTime >= 5)
+            {
+                _manaRegenerationTime = 0;
+
+                Global.Instance.GameData.PlayerMana += Utils.Stats.ManaRegeneration();
+
+                if (Global.Instance.GameData.PlayerMana > Global.Instance.GameData.PlayerMaxMana)
+                {
+                    Global.Instance.GameData.PlayerMana = Global.Instance.GameData.PlayerMaxMana;
                 }
             }
 

@@ -50,6 +50,8 @@ namespace MMRO2.Scenes
             Global.Instance.GameData.World = World;
             Global.Instance.GameData.Camera = Camera;
 
+            Global.Instance.GameData.UpdatePerks();
+
             _ui = new List<Main.SceneComponent>();
             _ui.Add(new UI.Frame());
             _ui.Add(new UI.PlayerStats());
