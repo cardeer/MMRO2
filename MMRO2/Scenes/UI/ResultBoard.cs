@@ -22,6 +22,8 @@ namespace MMRO2.Scenes.UI
 
 		private SpriteFont _font;
 
+		public UI.SelectCards selectCard = new UI.SelectCards();
+
 		public ResultBoard()
 		{	
 			//Load Content
@@ -115,6 +117,7 @@ namespace MMRO2.Scenes.UI
 		{
 			Global.Instance.GameData.Reset();
 			Global.Instance.GameData.Wave++;
+			selectCard.Draw();
 		}
 	}
 }
