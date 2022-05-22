@@ -36,7 +36,7 @@ namespace MMRO2.Scenes
 			_background.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight);
 
 			_backButton = new Sprites.Buttons(_buttonTex, _font, "  BACK", _buttonTex.Width / 3, _buttonTex.Height / 3);
-			_backButton.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight + 50);
+			_backButton.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.Height - 100);
 			_backButton.setTextColor(Color.White);
 
 			_backButton.Click += _backButton_clicked;
