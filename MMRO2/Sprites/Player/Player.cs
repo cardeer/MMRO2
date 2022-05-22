@@ -46,6 +46,9 @@ namespace MMRO2.Sprites.Player
 
         private Enums.BallTypes _ballType = Enums.BallTypes.Normal;
 
+        private bool _canShoot = true;
+        private float _shootSeconds = 0;
+
         public Player(World world) : base(world)
         {
             Texture = _playerBodyTexture;
@@ -151,8 +154,22 @@ namespace MMRO2.Sprites.Player
                 lastPos = pos;
             }
 
-            if (!Global.Instance.GameData.PrevPaused && Utils.Input.IsLeftMouseClicked())
+            if (!_canShoot)
             {
+                _shootSeconds += (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
+
+                if (_shootSeconds >= 1)
+                {
+                    _canShoot = true;
+                    _shootSeconds = 0;
+                }
+            }
+
+
+            if (!Global.Instance.GameData.PrevPaused && _canShoot && Utils.Input.IsLeftMouseClicked())
+            {
+                _canShoot = false;
+
                 float manaUsage = Settings.Gameplay.ManaUsage[_ballType];
                 if (manaUsage == -1) manaUsage = Global.Instance.GameData.PlayerMana;
 

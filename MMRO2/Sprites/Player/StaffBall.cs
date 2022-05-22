@@ -13,6 +13,7 @@ namespace MMRO2.Sprites.Player
         public float Height;
         public Vector2 Position;
         private Vector2 _textureSize;
+        private Vector2 _scale;
 
         public int CurrentFrame
         {
@@ -38,7 +39,7 @@ namespace MMRO2.Sprites.Player
                     Color.White,
                     0f,
                     new Vector2(_animation.FrameWidth / 2, _animation.FrameHeight / 2),
-                    new Vector2(Width, Height) / _textureSize,
+                    _scale,
                     SpriteEffects.None,
                     0f
                 );
@@ -47,9 +48,12 @@ namespace MMRO2.Sprites.Player
 
         public void SetTexture(Texture2D texture, int partsX = 1, int partsY = 1)
         {
-            _animation = new Controllers.Animation(texture, partsX, partsY);
-            Height = Width / ((float)_animation.FrameWidth / (float)_animation.FrameHeight);
-            _textureSize = new Vector2(_animation.FrameWidth, _animation.FrameHeight);
+            var tmpAnimation = new Controllers.Animation(texture, partsX, partsY);
+            Height = Width / ((float)tmpAnimation.FrameWidth / (float)tmpAnimation.FrameHeight);
+            _textureSize = new Vector2(tmpAnimation.FrameWidth, tmpAnimation.FrameHeight);
+            _scale = new Vector2(Width, Height) / _textureSize;
+
+            _animation = tmpAnimation;
         }
     }
 }

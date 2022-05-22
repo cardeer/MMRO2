@@ -93,7 +93,7 @@ namespace MMRO2.Scenes
 
 		public void _playButton_clicked(object sender, EventArgs args)
 		{
-			Global.Instance.GameData.Reset();
+			Global.Instance.GameData = new GameData();
 			Utils.Scene.Control.ChangeScene(Enums.Scenes.Playing);
 		}
 
