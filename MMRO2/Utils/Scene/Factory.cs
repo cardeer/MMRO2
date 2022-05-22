@@ -16,6 +16,9 @@ namespace MMRO2.Utils.Scene
                 case Enums.Scenes.Story:
                     return new Scenes.Story();
 
+                case Enums.Scenes.Home:
+                    return new Scenes.Home();
+
                 default:
                     throw new Exception("Scene not found.");
             }

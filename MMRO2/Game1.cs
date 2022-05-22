@@ -42,7 +42,7 @@ namespace MMRO2
 
             Global.Instance.InvisibleRect = Utils.Sprite.Factory.CreateRectangle(1, 1, new Color(0, 0, 0, 0));
 
-            Utils.Scene.Control.ChangeScene(Enums.Scenes.Playing);
+            Utils.Scene.Control.ChangeScene(Enums.Scenes.Home);
         }
 
 

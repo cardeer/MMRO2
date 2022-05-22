@@ -47,6 +47,6 @@ namespace MMRO2.Settings
             { Enums.BallTypes.Explosion, -1 },
         };
 
-        public static readonly int[] MonsterCount = new int[] { 10, 12, 1, 17, 20, 23, 25, 28, 30 };
+        public static readonly int[] MonsterCount = new int[] { 10, 20, 19, 20, 30, 29, 20, 30, 29 };
     }
 }
