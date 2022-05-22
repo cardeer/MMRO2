@@ -10,8 +10,8 @@ namespace MMRO2.Sprites.Monsters
 {
     class Crocodile : Main.Monster
     {
-        private float _originSpeed = 1.5f;
-        public float Speed = 1.5f;
+        private float _originSpeed = 1.125f;
+        public float Speed = 1.125f;
 
         private bool _slow = false;
         private float _slowTime = 0;
@@ -26,6 +26,8 @@ namespace MMRO2.Sprites.Monsters
         public Crocodile(World world) : base(world)
         {
             Width = 4f;
+
+            HP = 400f;
 
             Texture2D animation1 = Global.Instance.Content.Load<Texture2D>("images/monsters/crocodile");
 
