@@ -6,9 +6,10 @@ namespace MMRO2.Enums
 {
     enum Perks
     {
-        Explosion,
-        Fire,
-        Ice,
-        Lightning,
+        IncreaseBulletDamage,
+        ReduceManaUsage,
+        IncreaseMaxMana,
+        ReduceSkillCooldown,
+        IncreaseMaxHP,
     }
 }

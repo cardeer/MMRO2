@@ -12,7 +12,7 @@ namespace MMRO2
 
         public bool ExplosionCalled = false;
 
-        public int Wave = 1;
+        public int Wave = 6;
         public int EnemiesSpawned = 0;
         public bool BossDied = false;
         public bool BossSpawned = false;
@@ -31,7 +31,16 @@ namespace MMRO2
         public World World;
         public Types.Camera Camera;
 
-        public GameData Reset() {
+        public Dictionary<Enums.Perks, float> Perks = new Dictionary<Enums.Perks, float>()
+        {
+            { Enums.Perks.IncreaseBulletDamage, 0 },
+            { Enums.Perks.ReduceManaUsage, 0 },
+            { Enums.Perks.IncreaseMaxMana, 0 },
+            { Enums.Perks.ReduceSkillCooldown, 0 },
+            { Enums.Perks.IncreaseMaxHP, 0 },
+        };
+
+        public void Reset() {
             foreach (var bullet in Bullets)
             {
                 World.Remove(bullet.Body);
@@ -47,11 +56,25 @@ namespace MMRO2
                 World.Remove(effect.Body);
             }
 
-            GameData newData = new GameData();
-            newData.World = World;
-            newData.Camera = Camera;
+            Paused = false;
+            PrevPaused = true;
 
-            return newData;
+            ExplosionCalled = false;
+
+            EnemiesSpawned = 0;
+            BossDied = false;
+            BossSpawned = false;
+            Failed = false;
+
+            PlayerHP = 500f;
+            PlayerMaxHP = 500f;
+
+            PlayerMana = 100f;
+            PlayerMaxMana = 100f;
+
+            Bullets.Clear();
+            Monsters.Clear();
+            Effects.Clear();
         }
     }
 }

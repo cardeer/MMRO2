@@ -47,7 +47,7 @@ namespace MMRO2.Sprites.Monsters
         {
             if ((string)other.Body.Tag == Settings.Collision.Bullet)
             {
-                TakeDamage(20);
+                TakeDamage(Settings.Gameplay.BaseBulletDamage + Global.Instance.GameData.Perks[Enums.Perks.IncreaseBulletDamage]);
             }
 
             if ((string)other.Body.Tag == Settings.Collision.IceArea)
@@ -99,7 +99,7 @@ namespace MMRO2.Sprites.Monsters
 
                 if (_fireCounter >= 1)
                 {
-                    TakeDamage(10);
+                    TakeDamage(Settings.Gameplay.BaseFireDamage + Global.Instance.GameData.Perks[Enums.Perks.IncreaseBulletDamage]);
                     _fireCounter = 0;
                 }
 
@@ -117,7 +117,7 @@ namespace MMRO2.Sprites.Monsters
 
                 if (_lightningTime >= .1)
                 {
-                    TakeDamage(50);
+                    TakeDamage(Settings.Gameplay.BaseLightningDamage + Global.Instance.GameData.Perks[Enums.Perks.IncreaseBulletDamage]);
                     _lightning = false;
                 }
 

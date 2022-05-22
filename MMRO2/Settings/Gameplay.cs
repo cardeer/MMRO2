@@ -12,6 +12,10 @@ namespace MMRO2.Settings
         public const float ProjectileSensitivityY = 2;
         public const float MaxProjectileForce = 15;
 
+        public const float BaseBulletDamage = 20;
+        public const float BaseFireDamage = 10;
+        public const float BaseLightningDamage = 50;
+
         public static readonly Dictionary<string, int> Damages = new Dictionary<string, int>()
         {
             { "cabbage", 10 },

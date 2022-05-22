@@ -175,7 +175,7 @@ namespace MMRO2.Scenes
                     }
                     else if (Global.Instance.GameData.Wave % 3 != 0 && Global.Instance.GameData.Monsters.Count == 0)
                     {
-                        Global.Instance.GameData = Global.Instance.GameData.Reset();
+                        Global.Instance.GameData.Reset();
                         Global.Instance.GameData.BossDied = true;
                     }
                 }
