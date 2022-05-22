@@ -132,19 +132,12 @@ namespace MMRO2.Scenes
         public override void Update()
         {
             //HandleCamera();
-            if (Global.Instance.GameData.BossDied)
+
+            if (Global.Instance.GameData.Failed || Global.Instance.GameData.BossDied)
             {
-                _secondsBeforeNextWave -= (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
-
-                if (_secondsBeforeNextWave <= 0)
-                {
-                    Global.Instance.GameData.Wave++;
-                    Global.Instance.GameData.Reset();
-                    _secondsBeforeNextWave = 3;
-                }
+                _resulBoard.Update();
+                return;
             }
-
-            if (Global.Instance.GameData.Failed || Global.Instance.GameData.BossDied) return;
 
             _hamburger.Update();
 

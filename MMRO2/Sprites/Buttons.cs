@@ -47,21 +47,16 @@ namespace MMRO2.Sprites
             }
         }
 
-        public bool Clicked
-        {
-            get; private set;
-        }
-
         public override void Update()
         {
             bool hovering = _isHovering;
 
-            if (hovering) 
+            if (hovering)
             {
                 if (Utils.Input.IsLeftMouseClicked())
                 {
                     Click?.Invoke(this, new EventArgs());
-                } 
+                }
             }
         }
 
@@ -97,14 +92,15 @@ namespace MMRO2.Sprites
 
             if (_text != null)
             {
+                Vector2 size = _font.MeasureString(_text);
                 Global.Instance.SpriteBatch.DrawString
                 (
                     _font,
                     _text,
-                    Position + new Vector2(_width / 5, _height / 5),
+                    Position,
                     _textColor,
                     0f,
-                    new Vector2(_width / 2, _height / 2),
+                    size / 2,
                     0.75f,
                     SpriteEffects.None,
                     0f

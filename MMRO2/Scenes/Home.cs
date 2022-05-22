@@ -49,19 +49,19 @@ namespace MMRO2.Scenes
 			_logo = new Sprites.Rectangle(_logoTex, (int)(_logoTex.Width / 1.25), (int)(_logoTex.Height / 1.25));
 			_logo.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight - 150);
 
-			_playButton = new Sprites.Buttons(_buttonTex, _font, "  PLAY", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_playButton = new Sprites.Buttons(_buttonTex, _font, "PLAY", _buttonTex.Width / 3, _buttonTex.Height / 3);
 			_playButton.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight + 50);
 			_playButton.setTextColor(Color.White);
 
-			_storyButton = new Sprites.Buttons(_buttonTex, _font, " STORY", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_storyButton = new Sprites.Buttons(_buttonTex, _font, "STORY", _buttonTex.Width / 3, _buttonTex.Height / 3);
 			_storyButton.Position = new Vector2(Settings.Window.HalfWidth, _playButton.Position.Y + 80);
 			_storyButton.setTextColor(Color.White);
 
-			_creditButton = new Sprites.Buttons(_buttonTex, _font, " CREDIT", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_creditButton = new Sprites.Buttons(_buttonTex, _font, "CREDIT", _buttonTex.Width / 3, _buttonTex.Height / 3);
 			_creditButton.Position = new Vector2(Settings.Window.HalfWidth, _storyButton.Position.Y + 80);
 			_creditButton.setTextColor(Color.White);
 
-			_quitButton = new Sprites.Buttons(_buttonTex, _font, "  QUIT", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_quitButton = new Sprites.Buttons(_buttonTex, _font, "QUIT", _buttonTex.Width / 3, _buttonTex.Height / 3);
 			_quitButton.Position = new Vector2(Settings.Window.HalfWidth, _creditButton.Position.Y + 80);
 			_quitButton.setTextColor(Color.White);
 

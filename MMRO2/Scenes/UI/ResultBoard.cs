@@ -16,7 +16,7 @@ namespace MMRO2.Scenes.UI
 		private Sprites.Rectangle _loseboard;
 
 		private Sprites.Buttons _replayButton;
-		private Sprites.Buttons _quitButtion;
+		private Sprites.Buttons _quitButton;
 		private Sprites.Buttons _continueButton;
 		private Sprites.Buttons _homeButton;
 
@@ -48,14 +48,33 @@ namespace MMRO2.Scenes.UI
 			_homeButton.Position = new Vector2(Settings.Window.HalfWidth + 120, Settings.Window.HalfHeight);
 			_homeButton.setTextColor(Color.White);
 
+			_quitButton = new Sprites.Buttons(_buttonTex, _font, "QUIT", _buttonTex.Width / 4, _buttonTex.Height / 4);
+			_quitButton.Position = new Vector2(Settings.Window.HalfWidth - 120, Settings.Window.HalfHeight);
+			_quitButton.setTextColor(Color.White);
+
+			_continueButton = new Sprites.Buttons(_buttonTex, _font, "CONTINUE", _buttonTex.Width / 4, _buttonTex.Height / 4);
+			_continueButton.Position = new Vector2(Settings.Window.HalfWidth + 120, Settings.Window.HalfHeight);
+			_continueButton.setTextColor(Color.White);
+
 			_replayButton.Click += _replayButton_clicked;
 			_homeButton.Click += _homeButton_clicked;
+
+			_continueButton.Click += _continueButton_clicked;
+			_quitButton.Click += _quitButton_clicked;
 		}
 
 		public override void Update()
 		{
-
-			
+			if (Global.Instance.GameData.Failed)
+			{
+				_replayButton.Update();
+				_homeButton.Update();
+			}
+			else if (Global.Instance.GameData.BossDied)
+			{
+				_quitButton.Update();
+				_continueButton.Update();
+			}
 		}
 
 		public override void Draw()
@@ -65,25 +84,37 @@ namespace MMRO2.Scenes.UI
 				_loseboard.Draw();
 
 				_replayButton.Draw();
-				_replayButton.Update();
-
-				_homeButton.Update();
 				_homeButton.Draw();
 			}
 			else if (Global.Instance.GameData.BossDied)
 			{
 				_winboard.Draw();
+
+				_quitButton.Draw();
+				_continueButton.Draw();
 			}
 		}
 
 		public void _replayButton_clicked(object sender, EventArgs args)
 		{
 			Global.Instance.GameData.Reset();
+			Global.Instance.GameData.Wave = 1;
 		}
 
 		public void _homeButton_clicked(object sender, EventArgs args)
 		{
 			Utils.Scene.Control.ChangeScene(Enums.Scenes.Home);
+		}
+
+		public void _quitButton_clicked(object sender, EventArgs args)
+		{
+			Game1.Quit();
+		}
+
+		public void _continueButton_clicked(object sender, EventArgs args)
+		{
+			Global.Instance.GameData.Reset();
+			Global.Instance.GameData.Wave++;
 		}
 	}
 }
