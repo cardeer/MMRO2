@@ -45,7 +45,7 @@ namespace MMRO2.Sprites.Player
         private bool _canShoot = true;
         private float _shootSeconds = 0;
 
-        private int _additionalBullets = (int)Utils.Stats.NumberOfBullets();
+        private int _numOfBullets = 1 + (int)Utils.Stats.NumberOfBullets();
 
         private float _manaRegenerationTime = 0;
 
@@ -162,17 +162,18 @@ namespace MMRO2.Sprites.Player
                 {
                     _canShoot = true;
                     _shootSeconds = 0;
+
+                    _numOfBullets = 1 + (int)Utils.Stats.NumberOfBullets();
                 }
             }
 
             if (!Global.Instance.GameData.PrevPaused && _canShoot && Utils.Input.IsLeftMouseClicked())
             {
-                _additionalBullets--;
+                _numOfBullets--;
 
-                if (_additionalBullets <= 0)
+                if (_numOfBullets <= 0)
                 {
                     _canShoot = false;
-                    _additionalBullets = (int)Utils.Stats.NumberOfBullets();
                 }
 
                 float reduceScale = 1 - (Utils.Stats.ReduceManaUsage() / 100);
@@ -226,7 +227,7 @@ namespace MMRO2.Sprites.Player
             _manaRegenerationTime += (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
 
             // if player has mana regeneration perk
-            if (_manaRegenerationTime >= 5)
+            if (_manaRegenerationTime >= 10)
             {
                 _manaRegenerationTime = 0;
 
