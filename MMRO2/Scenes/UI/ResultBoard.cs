@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using tainicom.Aether.Physics2D.Dynamics;
+using Microsoft.Xna.Framework.Media;
 
 namespace MMRO2.Scenes.UI
 {
@@ -126,6 +127,7 @@ namespace MMRO2.Scenes.UI
         public void _homeButton_clicked(object sender, EventArgs args)
         {
             Utils.Scene.Control.ChangeScene(Enums.Scenes.Home);
+            MediaPlayer.Volume = 0f;
         }
 
         public void _quitButton_clicked(object sender, EventArgs args)

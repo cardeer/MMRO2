@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace MMRO2.Scenes.UI
 {
@@ -131,11 +132,13 @@ namespace MMRO2.Scenes.UI
 			if (!_isMute)
 			{
 				_isMute = true;
+				MediaPlayer.Volume = 0f;
 				_musicButton.setTexture(_muteTex);
 			}
 			else
 			{
 				_isMute = false;
+				MediaPlayer.Volume = 1f;
 				_musicButton.setTexture(_musicTex);
 			}
 		}
@@ -153,6 +156,7 @@ namespace MMRO2.Scenes.UI
 		public void _homeButton_clicked(object sender, EventArgs args)
 		{
 			Utils.Scene.Control.ChangeScene(Enums.Scenes.Home);
+			MediaPlayer.Volume = 0f;
 		}
 
 		public void _quitButton_clicked(object sender, EventArgs args)

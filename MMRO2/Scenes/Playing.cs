@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using tainicom.Aether.Physics2D.Dynamics;
+using Microsoft.Xna.Framework.Media;
 
 namespace MMRO2.Scenes
 {
@@ -30,7 +31,6 @@ namespace MMRO2.Scenes
         private Texture2D _pauseBackgroundTexture;
 
         private UI.Hamburger _hamburger = new UI.Hamburger();
-
         private UI.ResultBoard _resulBoard = new UI.ResultBoard();
 
         private float _borderWidth;
@@ -42,6 +42,12 @@ namespace MMRO2.Scenes
         private int _spawnSeconds;
 
         private float _secondsBeforeNextWave = 3;
+
+        //Audio
+        private Song _bgm1;
+        private Song _bgm2;
+        private Song _bgm3;
+        private Song _currentBGM;
 
         public override void Initialize()
         {
@@ -60,6 +66,33 @@ namespace MMRO2.Scenes
             _bgForestTexture = Global.Instance.Content.Load<Texture2D>("images/backgrounds/forest");
             _bgHalloweenTexture = Global.Instance.Content.Load<Texture2D>("images/backgrounds/halloween");
             _bgWinterTexture = Global.Instance.Content.Load<Texture2D>("images/backgrounds/winter");
+
+            //Load Audio
+            _bgm1 = Global.Instance.Content.Load<Song>("Audio/normal battle theme 1");
+            _bgm2 = Global.Instance.Content.Load<Song>("Audio/normal battle theme 2");
+            _bgm3 = Global.Instance.Content.Load<Song>("Audio/normal battle theme 3");
+
+            if (Global.Instance.GameData.Wave < 4)
+            {
+                _currentBGM = _bgm1;
+                MediaPlayer.Volume = 1f;
+            }
+            else if (Global.Instance.GameData.Wave >= 4 && Global.Instance.GameData.Wave < 7)
+            {
+                _currentBGM = _bgm2;
+                MediaPlayer.Volume = 1f;
+            }
+            else if (Global.Instance.GameData.Wave >= 7)
+            {
+                _currentBGM = _bgm3;
+                MediaPlayer.Volume = 1f;
+            }
+
+            MediaPlayer.IsRepeating = true;
+
+
+            MediaPlayer.Play(_currentBGM);
+            
 
             _groundTex = Utils.Sprite.Factory.CreateRectangle(1, 1, new Color(0, 0, 0, 0));
             _towerTex = Global.Instance.Content.Load<Texture2D>("images/map_objects/tower");
@@ -222,8 +255,22 @@ namespace MMRO2.Scenes
                 Global.Instance.GameData.Failed = true;
             }
 
-            if (Global.Instance.GameData.Wave >= 4) _BG.setTexture(_bgHalloweenTexture);
-            if (Global.Instance.GameData.Wave >= 7) _BG.setTexture(_bgWinterTexture);
+
+            if (Global.Instance.GameData.Wave < 4) 
+            {
+                _BG.setTexture(_bgForestTexture);
+                _currentBGM = _bgm1;
+            }
+            else if (Global.Instance.GameData.Wave >= 4 && Global.Instance.GameData.Wave < 7)
+            { 
+                _BG.setTexture(_bgHalloweenTexture);
+                _currentBGM = _bgm2;
+            }
+            else if (Global.Instance.GameData.Wave >= 7) 
+            {
+                _BG.setTexture(_bgWinterTexture);
+                _currentBGM = _bgm3;
+            }
 
             base.Update();
         }
