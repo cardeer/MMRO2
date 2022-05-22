@@ -151,6 +151,11 @@ namespace MMRO2.Sprites.Player
 
             if (!Global.Instance.GameData.PrevPaused && Utils.Input.IsLeftMouseClicked())
             {
+                float manaUsage = Settings.Gameplay.ManaUsage[_ballType];
+                if (manaUsage == -1) manaUsage = Global.Instance.GameData.PlayerMana;
+
+                Global.Instance.GameData.PlayerMana -= manaUsage;
+
                 Bullet bullet = new Bullet(
                     World,
                     Body.Position,
@@ -197,7 +202,7 @@ namespace MMRO2.Sprites.Player
                     }
                 }
 
-                Global.Instance.GameData.Monsters.RemoveAll(e => !e.IsBoss) ;
+                Global.Instance.GameData.Monsters.RemoveAll(e => !e.IsBoss);
 
                 Global.Instance.GameData.PlayerHP -= 100;
             }
@@ -320,21 +325,37 @@ namespace MMRO2.Sprites.Player
             if (Utils.Input.IsKeyPressed(Keys.Q))
             {
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Ice][0] > 0) return;
+                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Ice] > Global.Instance.GameData.PlayerMana)
+                {
+                    return;
+                }
                 SetBallType(Enums.BallTypes.Ice);
             }
             else if (Utils.Input.IsKeyPressed(Keys.W))
             {
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Fire][0] > 0) return;
+                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Fire] > Global.Instance.GameData.PlayerMana)
+                {
+                    return;
+                }
                 SetBallType(Enums.BallTypes.Fire);
             }
             else if (Utils.Input.IsKeyPressed(Keys.E))
             {
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Lightning][0] > 0) return;
+                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Lightning] > Global.Instance.GameData.PlayerMana)
+                {
+                    return;
+                }
                 SetBallType(Enums.BallTypes.Lightning);
             }
             else if (Utils.Input.IsKeyPressed(Keys.R))
             {
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Explosion][0] > 0) return;
+                if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Explosion] > Global.Instance.GameData.PlayerMana && Global.Instance.GameData.PlayerMana > 0)
+                {
+                    return;
+                }
                 SetBallType(Enums.BallTypes.Explosion);
             }
         }

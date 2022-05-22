@@ -38,6 +38,15 @@ namespace MMRO2.Settings
             { 9, new Enums.Monsters[]{ Enums.Monsters.SnowSlime } },
         };
 
+        public static readonly Dictionary<Enums.BallTypes, float> ManaUsage = new Dictionary<Enums.BallTypes, float>()
+        {
+            { Enums.BallTypes.Normal, 0 },
+            { Enums.BallTypes.Ice, 5 },
+            { Enums.BallTypes.Fire, 10 },
+            { Enums.BallTypes.Lightning, 15 },
+            { Enums.BallTypes.Explosion, -1 },
+        };
+
         public static readonly int[] MonsterCount = new int[] { 10, 12, 1, 17, 20, 23, 25, 28, 30 };
     }
 }
