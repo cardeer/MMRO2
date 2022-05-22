@@ -223,6 +223,9 @@ namespace MMRO2.Scenes
 
             }
 
+            if (Global.Instance.GameData.Wave >= 4) _BG.setTexture(_bgHalloweenTexture);
+            if (Global.Instance.GameData.Wave >= 7) _BG.setTexture(_bgWinterTexture);
+
             base.Update();
         }
 

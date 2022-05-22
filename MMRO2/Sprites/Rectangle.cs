@@ -23,6 +23,11 @@ namespace MMRO2.Sprites
             Scale = new Vector2(Width, Height) / TextureSize;
         }
 
+        public void setTexture(Texture2D texture)
+        {
+            Texture = texture;
+        }
+
         public override void Update()
         {
             base.Update();

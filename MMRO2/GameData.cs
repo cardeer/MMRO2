@@ -16,7 +16,7 @@ namespace MMRO2
         public bool BossSpawned = false;
         public bool Failed = false;
 
-        public float PlayerHP = 10f;
+        public float PlayerHP = 500f;
         public float PlayerMaxHP = 500f;
         private float _baseHP = 500f;
 
@@ -68,10 +68,10 @@ namespace MMRO2
             float manaScale = 1 + (Utils.Stats.MaxMana() / 100);
             PlayerMaxMana = _baseMana * manaScale;
             PlayerMana = PlayerMaxMana;
-            /*
+            
             float hpScale = 1 + (Utils.Stats.MaxHP() / 100);
             PlayerMaxHP = _baseHP * hpScale;
-            PlayerHP = PlayerMaxHP;*/
+            PlayerHP = PlayerMaxHP;
         }
 
         public void Reset() {
