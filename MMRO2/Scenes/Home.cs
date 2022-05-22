@@ -20,6 +20,8 @@ namespace MMRO2.Scenes
 		private Sprites.Rectangle _logo;
 
 		private Sprites.Buttons _playButton;
+		private Sprites.Buttons _storyButton;
+		private Sprites.Buttons _creditButton;
 		private Sprites.Buttons _quitButton;
 
 		private List<Sprites.Rectangle> _recList;
@@ -47,23 +49,34 @@ namespace MMRO2.Scenes
 			_logo = new Sprites.Rectangle(_logoTex, (int)(_logoTex.Width / 1.25), (int)(_logoTex.Height / 1.25));
 			_logo.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight - 150);
 
-			_playButton = new Sprites.Buttons(_buttonTex, _font, " PLAY", _buttonTex.Width / 3, _buttonTex.Height / 3);
-			_playButton.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight + 80);
+			_playButton = new Sprites.Buttons(_buttonTex, _font, "  PLAY", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_playButton.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight + 50);
 			_playButton.setTextColor(Color.White);
 
-			_quitButton = new Sprites.Buttons(_buttonTex, _font, " QUIT", _buttonTex.Width / 3, _buttonTex.Height / 3);
-			_quitButton.Position = new Vector2(Settings.Window.HalfWidth, _playButton.Position.Y + 80);
+			_storyButton = new Sprites.Buttons(_buttonTex, _font, " STORY", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_storyButton.Position = new Vector2(Settings.Window.HalfWidth, _playButton.Position.Y + 80);
+			_storyButton.setTextColor(Color.White);
+
+			_creditButton = new Sprites.Buttons(_buttonTex, _font, " CREDIT", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_creditButton.Position = new Vector2(Settings.Window.HalfWidth, _storyButton.Position.Y + 80);
+			_creditButton.setTextColor(Color.White);
+
+			_quitButton = new Sprites.Buttons(_buttonTex, _font, "  QUIT", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_quitButton.Position = new Vector2(Settings.Window.HalfWidth, _creditButton.Position.Y + 80);
 			_quitButton.setTextColor(Color.White);
 
 			_playButton.Click += _playButton_clicked;
+			_storyButton.Click += _storyButton_clicked;
+			_creditButton.Click += _creditButton_clicked;
 			_quitButton.Click += _quitButton_clicked;
 
 			_recList.Add(_background);
 			_recList.Add(_logo);
 
 			_buttonList.Add(_playButton);
+			_buttonList.Add(_storyButton);
+			_buttonList.Add(_creditButton);
 			_buttonList.Add(_quitButton);
-
 		}
 
 		public override void Update()
@@ -95,6 +108,16 @@ namespace MMRO2.Scenes
 		{
 			Global.Instance.GameData.Reset();
 			Utils.Scene.Control.ChangeScene(Enums.Scenes.Playing);
+		}
+
+		public void _storyButton_clicked(object sender, EventArgs args)
+		{
+			Utils.Scene.Control.ChangeScene(Enums.Scenes.Story);
+		}
+
+		public void _creditButton_clicked(object sender, EventArgs args)
+		{
+			Utils.Scene.Control.ChangeScene(Enums.Scenes.Credit);
 		}
 
 		public void _quitButton_clicked(object sender, EventArgs args)

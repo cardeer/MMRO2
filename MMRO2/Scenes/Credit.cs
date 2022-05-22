@@ -7,30 +7,32 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MMRO2.Scenes
 {
-	class Story : Main.GameScene
+	class Credit : Main.GameScene
 	{
-		private Texture2D _bgTex;
+		private Texture2D _backgroundTex;
+
 		private Texture2D _buttonTex;
 
-		private Sprites.Rectangle _background;
+		private SpriteFont _font;
 
 		private Sprites.Buttons _backButton;
 
-		private SpriteFont _font;
+		private Sprites.Rectangle _background;
 
 		public override void Initialize()
 		{
 			base.Initialize();
 
-			//Load Content
+			//Load Font
 			_font = Global.Instance.Content.Load<SpriteFont>("fonts/font20");
 
-			_bgTex = Global.Instance.Content.Load<Texture2D>("images/backgrounds/main");
+			//Load Texture
+			_backgroundTex = Global.Instance.Content.Load<Texture2D>("images/backgrounds/main");
+
 			_buttonTex = Global.Instance.Content.Load<Texture2D>("images/ui/main_button");
 
-
 			//Create Object
-			_background = new Sprites.Rectangle(_bgTex, _bgTex.Width, _bgTex.Height);
+			_background = new Sprites.Rectangle(_backgroundTex, _backgroundTex.Width, _backgroundTex.Height);
 			_background.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight);
 
 			_backButton = new Sprites.Buttons(_buttonTex, _font, "  BACK", _buttonTex.Width / 3, _buttonTex.Height / 3);

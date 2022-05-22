@@ -7,8 +7,9 @@ namespace MMRO2.Enums
     enum Scenes
     {
         None,
+        Home,
         Playing,
         Story,
-        Home
+        Credit
     }
 }
