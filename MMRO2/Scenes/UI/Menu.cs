@@ -147,7 +147,6 @@ namespace MMRO2.Scenes.UI
 
 		public void _replayButton_clicked(object sender, EventArgs args)
 		{
-			System.Diagnostics.Debug.WriteLine("replay");
 			Global.Instance.GameData.Reset();
 		}
 

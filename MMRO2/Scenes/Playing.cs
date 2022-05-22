@@ -31,6 +31,8 @@ namespace MMRO2.Scenes
 
         private UI.Hamburger _hamburger = new UI.Hamburger();
 
+        private UI.ResultBoard _resulBoard = new UI.ResultBoard();
+
         private float _borderWidth;
         private float _abilityTop;
 
@@ -277,36 +279,8 @@ namespace MMRO2.Scenes
 
             _hamburger.Draw();
 
-            if (Global.Instance.GameData.Failed)
-            {
-                Vector2 size = _font.MeasureString("YOU LOSE");
-                Global.Instance.SpriteBatch.DrawString(
-                    _font,
-                    "YOU LOSE",
-                    new Vector2(Settings.Window.Width / 2, Settings.Window.Height / 2),
-                    Color.White,
-                    0f,
-                    size / 2,
-                    1f,
-                    SpriteEffects.None,
-                    0f
-                );
-            }
-            else if (Global.Instance.GameData.BossDied)
-            {
-                Vector2 size = _font.MeasureString("YOU WIN");
-                Global.Instance.SpriteBatch.DrawString(
-                    _font,
-                    "YOU WIN",
-                    new Vector2(Settings.Window.Width / 2, Settings.Window.Height / 2),
-                    Color.White,
-                    0f,
-                    size / 2,
-                    1f,
-                    SpriteEffects.None,
-                    0f
-                );
-            }
+            _resulBoard.Draw();
+
             EndSprite();
 
             base.Draw();

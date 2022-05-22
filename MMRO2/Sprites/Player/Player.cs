@@ -161,7 +161,7 @@ namespace MMRO2.Sprites.Player
                 }
             }
 
-
+            _canShoot = true;
             if (!Global.Instance.GameData.PrevPaused && _canShoot && Utils.Input.IsLeftMouseClicked())
             {
                 _canShoot = false;
