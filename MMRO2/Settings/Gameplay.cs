@@ -18,11 +18,13 @@ namespace MMRO2.Settings
 
         public static readonly Dictionary<string, int> Damages = new Dictionary<string, int>()
         {
-            { "cabbage", 10 },
-            { "slime", 10 },
-            { "frog", 50 },
+            { "cabbage", 20 },
+            { "slime", 30 },
+            { "frog", 55 },
             { "golem", 80 },
-            { "shogun", 100 }
+            { "shogun", 100 },
+            { "rabbit", 40 },
+            { "vanir", 50 },
         };
 
         public static readonly Dictionary<int, Enums.Monsters[]> MonsterList = new Dictionary<int, Enums.Monsters[]>()
@@ -46,7 +48,7 @@ namespace MMRO2.Settings
             { Enums.BallTypes.Lightning, 15 },
         };
 
-        public static readonly int[] MonsterCount = new int[] { 1, 20, 19, 20, 30, 29, 20, 30, 29 };
+        public static readonly int[] MonsterCount = new int[] { 10, 20, 19, 20, 30, 29, 20, 30, 29 };
 
         public static readonly Dictionary<Enums.Perks, float[]> PerkStats = new Dictionary<Enums.Perks, float[]>()
         {

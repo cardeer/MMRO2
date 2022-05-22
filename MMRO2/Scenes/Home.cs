@@ -30,6 +30,7 @@ namespace MMRO2.Scenes
 		public override void Initialize()
 		{
 			base.Initialize();
+
 			_recList = new List<Sprites.Rectangle>();
 			_buttonList = new List<Sprites.Buttons>();
 

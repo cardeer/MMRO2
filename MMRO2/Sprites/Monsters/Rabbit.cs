@@ -76,7 +76,7 @@ namespace MMRO2.Sprites.Monsters
             if (Body.Position.X <= Settings.Gameplay.PlayerBasePosition + Width / 2)
             {
                 Body.LinearVelocity = Vector2.Zero;
-                Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["cabbage"];
+                Global.Instance.GameData.PlayerHP -= Settings.Gameplay.Damages["rabbit"];
                 ShouldRemove = true;
             }
 
