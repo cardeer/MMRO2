@@ -30,5 +30,23 @@ namespace MMRO2.Utils
 
             return null;
         }
+
+        public static List<int> GetAvailablePerks()
+        {
+            List<int> list = new List<int>();
+
+            var perks = Global.Instance.GameData.Perks;
+            var keys = perks.Keys;
+
+            foreach (var key in keys)
+            {
+                if (perks[key] < 3)
+                {
+                    list.Add((int)key);
+                }
+            }
+
+            return list;
+        }
     }
 }
