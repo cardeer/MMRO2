@@ -51,11 +51,11 @@ namespace MMRO2.Scenes.UI
             _homeButton.setTextColor(Color.White);
 
             _quitButton = new Sprites.Buttons(_buttonTex, _font, "QUIT", _buttonTex.Width / 4, _buttonTex.Height / 4);
-            _quitButton.Position = new Vector2(Settings.Window.HalfWidth - 120, Settings.Window.HalfHeight);
+            _quitButton.Position = new Vector2(Settings.Window.HalfWidth + 120, Settings.Window.HalfHeight);
             _quitButton.setTextColor(Color.White);
 
             _continueButton = new Sprites.Buttons(_buttonTex, _font, "CONTINUE", _buttonTex.Width / 4, _buttonTex.Height / 4);
-            _continueButton.Position = new Vector2(Settings.Window.HalfWidth + 120, Settings.Window.HalfHeight);
+            _continueButton.Position = new Vector2(Settings.Window.HalfWidth - 120, Settings.Window.HalfHeight);
             _continueButton.setTextColor(Color.White);
 
             _winHomeButton = new Sprites.Buttons(_buttonTex, _font, "HOME", _buttonTex.Width / 4, _buttonTex.Height / 4);
@@ -76,7 +76,7 @@ namespace MMRO2.Scenes.UI
             if (Global.Instance.GameData.Failed)
             {
                 _replayButton.Update();
-                _homeButton.Update();
+                _quitButton.Update();
             }
             else if (Global.Instance.GameData.BossDied)
             {
@@ -86,7 +86,7 @@ namespace MMRO2.Scenes.UI
                 }
                 else
                 {
-                    _quitButton.Update();
+                     _homeButton.Update();
                     _continueButton.Update();
                 }
             }
@@ -98,8 +98,9 @@ namespace MMRO2.Scenes.UI
             {
                 _loseboard.Draw();
 
-                _replayButton.Draw();
-                _homeButton.Draw();
+                _replayButton.Draw(); 
+                _quitButton.Draw();
+                
             }
             else if (Global.Instance.GameData.BossDied)
             {
@@ -111,8 +112,8 @@ namespace MMRO2.Scenes.UI
                 }
                 else
                 {
-                    _quitButton.Draw();
                     _continueButton.Draw();
+                    _homeButton.Draw();
                 }
             }
         }
@@ -136,6 +137,7 @@ namespace MMRO2.Scenes.UI
         {
             Global.Instance.GameData.Reset();
             Global.Instance.GameData.Wave++;
+            Utils.Scene.Control.ChangeScene(Enums.Scenes.Gacha);
         }
     }
 }

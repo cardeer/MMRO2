@@ -10,6 +10,7 @@ namespace MMRO2.Enums
         Home,
         Playing,
         Story,
-        Credit
+        Credit,
+        Gacha
     }
 }

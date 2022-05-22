@@ -22,6 +22,9 @@ namespace MMRO2.Utils.Scene
                 case Enums.Scenes.Credit:
                     return new Scenes.Credit();
 
+                case Enums.Scenes.Gacha:
+                    return new Scenes.SelectCards();
+
                 default:
                     throw new Exception("Scene not found.");
             }
