@@ -39,6 +39,8 @@ namespace MMRO2.Scenes
         private Random _random = new Random();
         private int _spawnSeconds;
 
+        private float _secondsBeforeNextWave = 3;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -128,6 +130,17 @@ namespace MMRO2.Scenes
         public override void Update()
         {
             //HandleCamera();
+            if (Global.Instance.GameData.BossDied)
+            {
+                _secondsBeforeNextWave -= (float)Global.Instance.GameTime.ElapsedGameTime.TotalSeconds;
+
+                if (_secondsBeforeNextWave <= 0)
+                {
+                    Global.Instance.GameData.Wave++;
+                    Global.Instance.GameData.Reset();
+                    _secondsBeforeNextWave = 3;
+                }
+            }
 
             if (Global.Instance.GameData.Failed || Global.Instance.GameData.BossDied) return;
 
