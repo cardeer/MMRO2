@@ -27,7 +27,7 @@ namespace MMRO2.Scenes
 			_font = Global.Instance.Content.Load<SpriteFont>("fonts/font20");
 
 			//Load Texture
-			_backgroundTex = Global.Instance.Content.Load<Texture2D>("images/backgrounds/main");
+			_backgroundTex = Global.Instance.Content.Load<Texture2D>("images/backgrounds/credit");
 
 			_buttonTex = Global.Instance.Content.Load<Texture2D>("images/ui/main_button");
 
@@ -35,7 +35,7 @@ namespace MMRO2.Scenes
 			_background = new Sprites.Rectangle(_backgroundTex, _backgroundTex.Width, _backgroundTex.Height);
 			_background.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.HalfHeight);
 
-			_backButton = new Sprites.Buttons(_buttonTex, _font, "  BACK", _buttonTex.Width / 3, _buttonTex.Height / 3);
+			_backButton = new Sprites.Buttons(_buttonTex, _font, "BACK", _buttonTex.Width / 3, _buttonTex.Height / 3);
 			_backButton.Position = new Vector2(Settings.Window.HalfWidth, Settings.Window.Height - 100);
 			_backButton.setTextColor(Color.White);
 
