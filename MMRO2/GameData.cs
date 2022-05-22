@@ -16,7 +16,7 @@ namespace MMRO2
         public bool BossSpawned = false;
         public bool Failed = false;
 
-        public float PlayerHP = 10f;
+        public float PlayerHP = 500f;
         public float PlayerMaxHP = 500f;
         private float _baseHP = 500f;
 
