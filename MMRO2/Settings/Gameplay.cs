@@ -46,7 +46,7 @@ namespace MMRO2.Settings
             { Enums.BallTypes.Lightning, 15 },
         };
 
-        public static readonly int[] MonsterCount = new int[] { 10, 20, 19, 20, 30, 29, 20, 30, 0 };
+        public static readonly int[] MonsterCount = new int[] { 10, 20, 19, 20, 30, 29, 20, 30, 29 };
 
         public static readonly Dictionary<Enums.Perks, float[]> PerkStats = new Dictionary<Enums.Perks, float[]>()
         {
