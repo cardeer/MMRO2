@@ -46,6 +46,20 @@ namespace MMRO2.Settings
             { Enums.BallTypes.Lightning, 15 },
         };
 
-        public static readonly int[] MonsterCount = new int[] { 10, 20, 19, 20, 30, 29, 20, 30, 29 };
+        public static readonly int[] MonsterCount = new int[] { 10, 20, 19, 20, 30, 29, 20, 30, 0 };
+
+        public static readonly Dictionary<Enums.Perks, float[]> PerkStats = new Dictionary<Enums.Perks, float[]>()
+        {
+            { Enums.Perks.IncreaseBulletDamage, new float[]{ 1, 1.5f, 1.75f, 2f } },
+            { Enums.Perks.NumberOfBullets, new float[]{ 0, 1, 2, 3 } },
+            { Enums.Perks.ReduceManaUsage, new float[]{ 0, 20, 25, 30 } },
+            { Enums.Perks.IncreaseMaxMana, new float[]{ 0, 20, 30, 50 } },
+            { Enums.Perks.ReduceSkillCooldown, new float[]{ 0, 30, 40, 50 } },
+            { Enums.Perks.ManaRegeneration, new float[]{ 0, 10, 15, 20 } },
+            { Enums.Perks.IncreaseMaxHP, new float[]{ 0, 50, 75, 100 } },
+            { Enums.Perks.IceBulletLevel, new float[]{ 0, 1.5f, 2, 3 } },
+            { Enums.Perks.FireBulletLevel, new float[]{ 0, 10, 20, 30 } },
+            { Enums.Perks.LightningBulletLevel, new float[]{ 1, 1.5f, 1.75f, 2f } },
+        };
     }
 }
