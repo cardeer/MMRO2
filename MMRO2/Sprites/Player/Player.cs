@@ -23,11 +23,6 @@ namespace MMRO2.Sprites.Player
         private Texture2D _playerBodyTexture = Global.Instance.Content.Load<Texture2D>("images/player/body");
         private Texture2D _playerWandTexture = Global.Instance.Content.Load<Texture2D>("images/player/wand");
 
-        private Texture2D _ball = Global.Instance.Content.Load<Texture2D>("images/ball");
-        private Texture2D _iceBall = Global.Instance.Content.Load<Texture2D>("images/ball");
-        private Texture2D _fireBall = Global.Instance.Content.Load<Texture2D>("images/ball");
-        private Texture2D _lightningBall = Global.Instance.Content.Load<Texture2D>("images/ball");
-
         private float _wandRotation = 0f;
 
         private Texture2D _projectileTexture;
@@ -38,6 +33,7 @@ namespace MMRO2.Sprites.Player
 
         private StaffBall _staffBall;
 
+        private Texture2D _ballTexture = Global.Instance.Content.Load<Texture2D>("images/ball");
         private Texture2D _fireBallTexture = Global.Instance.Content.Load<Texture2D>("images/staff_balls/fire");
         private Texture2D _lightningBallTexture = Global.Instance.Content.Load<Texture2D>("images/staff_balls/lightning");
         private Texture2D _iceBallTexture = Global.Instance.Content.Load<Texture2D>("images/staff_balls/ice");
@@ -83,7 +79,7 @@ namespace MMRO2.Sprites.Player
 
         public void setBallTexture(Texture2D texture)
         {
-            _ball = texture;
+            _ballTexture = texture;
         }
 
         public override void Update()
@@ -274,13 +270,13 @@ namespace MMRO2.Sprites.Player
             foreach (var bullet in Global.Instance.GameData.Bullets)
             {
                 Global.Instance.SpriteBatch.Draw(
-                    _ball,
+                    _ballTexture,
                     bullet.Position,
                     null,
                     Color.White,
                     bullet.Rotation,
-                    new Vector2(_ball.Width, _ball.Height) / 2,
-                    new Vector2(.4f, .4f) / new Vector2(_ball.Width, _ball.Height),
+                    new Vector2(_ballTexture.Width, _ballTexture.Height) / 2,
+                    new Vector2(.6f, .6f) / new Vector2(_ballTexture.Width, _ballTexture.Height),
                     SpriteEffects.FlipVertically,
                     0f
                 );
@@ -298,7 +294,7 @@ namespace MMRO2.Sprites.Player
             switch (type)
             {
                 case Enums.BallTypes.Normal:
-                    _staffBall.SetTexture(_fireBallTexture, 6, 1);
+                    _staffBall.SetTexture(_ballTexture, 1, 1);
                     break;
                 case Enums.BallTypes.Fire:
                     _staffBall.SetTexture(_fireBallTexture, 6, 1);
@@ -309,9 +305,6 @@ namespace MMRO2.Sprites.Player
                 case Enums.BallTypes.Lightning:
                     _staffBall.SetTexture(_lightningBallTexture, 6, 1);
                     break;
-                default:
-                    _staffBall.SetTexture(_fireBallTexture, 6, 1);
-                    break;
             }
         }
 
@@ -319,6 +312,12 @@ namespace MMRO2.Sprites.Player
         {
             if (Utils.Input.IsKeyPressed(Keys.Q))
             {
+                if (_ballType == Enums.BallTypes.Ice)
+                {
+                    SetBallType(Enums.BallTypes.Normal);
+                    return;
+                }
+
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Ice][0] > 0) return;
                 if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Ice] > Global.Instance.GameData.PlayerMana) return;
 
@@ -326,6 +325,11 @@ namespace MMRO2.Sprites.Player
             }
             else if (Utils.Input.IsKeyPressed(Keys.W))
             {
+                if (_ballType == Enums.BallTypes.Fire)
+                {
+                    SetBallType(Enums.BallTypes.Normal);
+                    return;
+                }
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Fire][0] > 0) return;
                 if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Fire] > Global.Instance.GameData.PlayerMana) return;
 
@@ -333,6 +337,11 @@ namespace MMRO2.Sprites.Player
             }
             else if (Utils.Input.IsKeyPressed(Keys.E))
             {
+                if (_ballType == Enums.BallTypes.Lightning)
+                {
+                    SetBallType(Enums.BallTypes.Normal);
+                    return;
+                }
                 if (Global.Instance.GameData.SkillCooldown[Enums.BallTypes.Lightning][0] > 0) return;
                 if (Settings.Gameplay.ManaUsage[Enums.BallTypes.Lightning] > Global.Instance.GameData.PlayerMana) return;
 
@@ -365,8 +374,6 @@ namespace MMRO2.Sprites.Player
                 Global.Instance.GameData.Monsters.RemoveAll(e => !e.IsBoss);
                 Global.Instance.GameData.PlayerHP -= 100;
                 Global.Instance.GameData.PlayerMana = 0;
-
-                SetBallType(Enums.BallTypes.Explosion);
             }
         }
     }

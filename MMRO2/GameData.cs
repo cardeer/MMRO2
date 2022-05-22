@@ -32,10 +32,10 @@ namespace MMRO2
 
         public Dictionary<Enums.BallTypes, float[]> SkillCooldown = new Dictionary<Enums.BallTypes, float[]>()
         {
-            { Enums.BallTypes.Ice, new float[]{ 3, 3 } },
-            { Enums.BallTypes.Fire, new float[]{ 5, 5 } },
-            { Enums.BallTypes.Lightning, new float[]{ 15, 15 } },
-            { Enums.BallTypes.Explosion, new float[]{ 30, 30 } }
+            { Enums.BallTypes.Ice, new float[]{ 3, 3, 3 } },
+            { Enums.BallTypes.Fire, new float[]{ 5, 5, 5 } },
+            { Enums.BallTypes.Lightning, new float[]{ 15, 15, 15 } },
+            { Enums.BallTypes.Explosion, new float[]{ 30, 30, 30 } }
         };
 
         public Dictionary<Enums.Perks, float> Perks = new Dictionary<Enums.Perks, float>()
@@ -71,11 +71,11 @@ namespace MMRO2
             BossSpawned = false;
             Failed = false;
 
-            PlayerHP = 500f;
-            PlayerMaxHP = 500f;
+            //PlayerHP = 500f;
+            //PlayerMaxHP = 500f;
 
-            PlayerMana = 100f;
-            PlayerMaxMana = 100f;
+            //PlayerMana = 100f;
+            //PlayerMaxMana = 100f;
 
             Bullets.Clear();
             Monsters.Clear();

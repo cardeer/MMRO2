@@ -37,7 +37,7 @@ namespace MMRO2.Sprites.Player
             Body = World.CreateBody(position + new Vector2(dirX * 2, dirY + .7f), 0, BodyType.Dynamic);
             Body.Tag = tag;
 
-            var bullet = Body.CreateCircle(0.2f, 1);
+            var bullet = Body.CreateCircle(0.3f, 1);
             bullet.Restitution = 0f;
 
             Body.Mass = 1;
