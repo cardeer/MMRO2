@@ -20,11 +20,11 @@ namespace MMRO2.Settings
         {
             { "cabbage", 20 },
             { "slime", 30 },
-            { "frog", 55 },
-            { "golem", 80 },
-            { "shogun", 100 },
             { "rabbit", 40 },
             { "vanir", 50 },
+            { "frog", 40 },
+            { "golem", 80 },
+            { "shogun", 100 },
         };
 
         public static readonly Dictionary<int, Enums.Monsters[]> MonsterList = new Dictionary<int, Enums.Monsters[]>()

@@ -230,7 +230,7 @@ namespace MMRO2.Scenes.UI
                 button.Draw();
             }
 
-            string str = $"{Global.Instance.GameData.PlayerHP} / {Global.Instance.GameData.PlayerMaxHP}";
+            string str = $"{(int)Global.Instance.GameData.PlayerHP} / {(int)Global.Instance.GameData.PlayerMaxHP}";
             Vector2 stringSize = _font.MeasureString(str);
 
             Global.Instance.SpriteBatch.DrawString(
@@ -245,7 +245,7 @@ namespace MMRO2.Scenes.UI
                 0f
             );
 
-            str = $"{Global.Instance.GameData.PlayerMana} / {Global.Instance.GameData.PlayerMaxMana}";
+            str = $"{(int)Global.Instance.GameData.PlayerMana} / {(int)Global.Instance.GameData.PlayerMaxMana}";
             stringSize = _font.MeasureString(str);
 
             Global.Instance.SpriteBatch.DrawString(
