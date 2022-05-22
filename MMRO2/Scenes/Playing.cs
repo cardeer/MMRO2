@@ -43,8 +43,6 @@ namespace MMRO2.Scenes
         {
             base.Initialize();
 
-            Global.Instance.GameData = new GameData();
-
             Global.Instance.GameData.World = World;
             Global.Instance.GameData.Camera = Camera;
 

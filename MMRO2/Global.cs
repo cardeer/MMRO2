@@ -27,7 +27,7 @@ namespace MMRO2
 
         // gameplay data
         public Texture2D InvisibleRect;
-        public GameData GameData;
+        public GameData GameData = new GameData();
 
         // create global instance and return
         private static Global s_current;
